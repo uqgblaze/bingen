@@ -376,3 +376,4 @@ function initCropTool() {
     selectImageUrl(croppedDataUrl, creditMarkup);
   });
 }
+window.selectImageUrl = selectImageUrl;
