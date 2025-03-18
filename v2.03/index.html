@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Block Library Example</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .control-nav-width {
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border: 1px solid #CDCDCD;
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+      <div class="spinner"></div>
+  </div>
+  <!-- End preloader -->
+
+  <!-- Wrap the navigation and generator panel in a flex container -->
+  <div class="main-container">
+    <div class="control-nav-width">
+      <div class="block-library-container">
+        <!-- Left panel: Navigation / Sidebar -->
+        <nav class="sidebar">
+          <h2 class="sidebar-title">Block Library</h2>
+          <ul class="block-types">
+            <li class="active" data-target="tab-ai-blocks">AI Blocks</li>
+            <li data-target="tab-text">Text</li>
+            <li data-target="tab-activity">Activity</li>
+            <li data-target="tab-statement">Statement</li>
+            <li data-target="tab-quote">Quote</li>
+            <li data-target="tab-list">List</li>
+            <li data-target="tab-image">Image</li>
+            <li data-target="tab-gallery">Gallery</li>
+            <li data-target="tab-multimedia">Multimedia</li>
+            <li data-target="tab-interactive">Interactive</li>
+            <li data-target="tab-knowledge-check">Knowledge Check</li>
+            <li data-target="tab-chart">Chart</li>
+            <li data-target="tab-divider">Divider</li>
+            <li data-target="tab-templates">Block Templates</li>
+          </ul>
+        </nav>
+        
+        <!-- Right panel: Preview area with cards -->
+        <div class="preview-panel">
+          <!-- AI Blocks content -->
+          <div id="tab-ai-blocks" class="preview-content active">
+            <h3>AI Blocks</h3>
+            <div class="card">
+              <div class="card-subheading">AI Block</div>
+              <div class="card-cover">
+                <img src="path-to-your-image/text-block-example.png" alt="Text Block Example" />
+              </div>
+            </div>
+          </div>
+          
+          <!-- Text content -->
+          <div id="tab-text" class="preview-content">
+            <h3>Text</h3>
+            <button class="card" type="button" data-url="https://uqgblaze.github.io/UQ-Swoosh/dev/generator-quote.html">
+              <div class="card-subheading">Merriweather text LINK TEST</div>
+              <div class="card-cover">
+                <img src="path-to-your-image/text-block-example.png" alt="Text Block Example" />
+              </div>
+            </button>
+            <button class="card" type="button" data-url="https://uqgblaze.github.io/mba-lecture-recordings/">
+              <div class="card-subheading">Roboto text LINK TEST</div>
+              <div class="card-cover">
+                <img src="path-to-your-image/text-block-example.png" alt="Text Block Example" />
+              </div>
+            </button>
+            <div class="card">
+              <div class="card-subheading">Other non-standard font</div>
+              <div class="card-cover">
+                <img src="path-to-your-image/text-block-example.png" alt="Text Block Example" />
+              </div>
+            </div>  
+          </div>
+        
+          <!-- Activity content -->
+          <div id="tab-activity" class="preview-content">
+            <h3>Activity</h3>
+            <div class="card">
+              <div class="card-subheading">Activity</div>
+              <div class="card-cover">
+                <img src="path-to-your-image/text-block-example.png" alt="Text Block Example" />
+              </div>
+            </div>
+            <!-- Additional cards… -->
+          </div>
+          
+          <!-- Other tabs would follow similarly -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Generator Panel: Iframe for loading external pages -->
+    <div class="generator-panel">
+      <iframe id="content-frame" src="https://uqgblaze.github.io/UQ-Swoosh/uqbin/alerts.html" frameborder="0"></iframe>
+    </div>
+  </div>
+  
+  <!-- Settings Modal Trigger (Gear Icon) -->
+  <div class="settings-container">
+    <button id="open-settings" title="Settings">&#9881;</button>
+  </div>
+  
+  <!-- Modal for Settings -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal-content">
+      <span class="close" id="close-modal">&times;</span>
+      <h2>Settings</h2>
+      <form id="settings-form">
+        <label for="course-code">Course Code:</label>
+        <input type="text" id="course-code" name="course-code" required />
+        <label for="api-key">API Key:</label>
+        <input type="text" id="api-key" name="api-key" required />
+        <button type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
