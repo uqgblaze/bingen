@@ -7,8 +7,11 @@
 
 /* Prevent page scrolling */
 body {
-  overflow: hidden;
   font-family: Arial, sans-serif;
+}
+.main-container {
+  display: flex;
+  height: 100vh;
 }
 
 /* Container for the entire block library area */
