@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Heading (Purple)</title>
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <style>
+    /* All your existing CSS remains unchanged */
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+    }
+    .uq-hero-basic__content, .uq-animated-gradient, .uq-card__title {
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+    .uqgenerator-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border: 1px solid #CDCDCD;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .preview-container {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed #CDCDCD;
+    }
+    button {
+      padding: 10px;
+      background-color: #51247a;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .icon-button {
+      vertical-align: middle;
+      background: none;
+      border: 1px solid #CDCDCD;
+      color: #555;
+      line-height: 1.6;
+      width: 100%;
+      cursor: pointer;
+    }
+    .icon-button svg {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      fill: #51247a;
+      margin-right: 8px;
+      line-height: 1.6;
+    }
+    /* ---- Modal Overlay Styles ---- */
+    .image-picker-overlay {
+      position: fixed;
+      z-index: 9999;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .image-picker-overlay.active {
+      display: flex;
+    }
+    .image-picker-dialog {
+      background-color: #fff;
+      width: 60vw; /* 60% of the viewport width */
+      height: 80vh; /* 80% of the viewport height */
+      border-radius: 5px;
+      position: relative;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      overflow: auto;
+    }
+    .image-picker-dialog h2 {
+      margin-top: 0;
+    }
+    .close-modal-button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: var(--uq-red);
+    }
+    /* Scrollable grid container */
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      grid-gap: 15px;
+      margin-top: 1rem;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .image-grid-item {
+      cursor: pointer;
+      text-align: center;
+      border: 1px solid transparent;
+      padding: 4px;
+      border-radius: 4px;
+    }
+    .image-grid-item:hover {
+      border-color: #51247a;
+    }
+    .image-grid-item img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 4px;
+    }
+    .image-grid-item p {
+      font-size: 12px;
+      margin-top: 5px;
+      color: #444;
+    }
+    .grid-subheading {
+      grid-column: 1 / -1;
+      margin: 10px 0 0;
+      font-weight: bold;
+      font-size: 14px;
+      color: #51247a;
+    }
+    .custom-url-section, .unsplash-search-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    .custom-url-section label, .unsplash-search-section label {
+      flex-shrink: 0;
+      margin-bottom: 0;
+    }
+    .input-parent {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 1fr;
+      grid-column-gap: 32px;
+      grid-row-gap: 0px;
+    }
+    .input-left { grid-area: 1 / 1 / 2 / 2; }
+    .input-right { grid-area: 1 / 2 / 2 / 3; }
+
+    /* ----- Cropping Tool Styles (if needed for modal) ----- */
+    #cropContainer {
+      position: relative;
+      display: inline-block;
+      max-width: 100%;
+    }
+    #cropContainer img {
+      display: block;
+      max-width: 100%;
+      max-height: 60vh;
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      user-drag: none;
+      user-select: none;
+    }
+    #cropBox {
+      position: absolute;
+      box-sizing: border-box;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    #cropBox::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border: 2px dashed #E62645;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+      background-size: 8px 8px;
+      animation: dash 2s linear infinite;
+    }
+    @keyframes dash {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 8px 8px, 8px 8px; }
+    }
+    .resize-handle {
+      width: 16px;
+      height: 16px;
+      background: #E62645;
+      position: absolute;
+      cursor: nwse-resize;
+      pointer-events: all;
+    }
+    .handle-tl { top: -10px; left: -10px; }
+    .handle-tr { top: -10px; right: -10px; }
+    .handle-bl { bottom: -10px; left: -10px; }
+    .handle-br { bottom: -10px; right: -10px; }
+    .crop-overlay {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="uq-container"> 
+    <div class="uqgenerator-container">
+      <!-- Live Preview Section -->
+      <div id="preview" class="preview-container"></div>
+
+      <!-- Input Fields -->
+      <div class="input-parent">
+        <div class="input-left">
+          <label>Module Title (Eyebrow Text)</label>
+          <input type="text" id="moduleTitle" placeholder="Module Title" value="Module Title">
+          <label>Lesson Title</label>
+          <input type="text" id="lessonTitle" value="Lesson Title">
+        </div>
+        <div class="input-right">
+          <label>Hero Subheading</label>
+          <textarea id="heroSubheading" placeholder="This is the hero subheading. If you don't need this subheading, just leave this blank."></textarea>
+        </div>
+      </div>
+      <button class="uq-button uq-button--large uq-button--expand" onclick="copyToClipboard()">
+        <span class="uq-icon uq-icon--standard--common-file-double"></span>
+        Copy to Clipboard
+      </button>
+    </div>
+  </div>
+
+  
+
+  <!-- External JavaScript files for the image library and image picker -->
+  <script src="https://uqgblaze.github.io/bingen/imagetool/imageLibrary.js"></script>
+  <script src="https://uqgblaze.github.io/bingen/imagetool/imagePicker.js"></script>
+
+  <!-- Inline Preview & Clipboard Script (custom per generator) -->
+ <script>
+  function updatePreview() {
+    const previewHtml = `
+      <body>
+	<div class="uq-hero-basic uqbs-rounded-border--all" style="margin-bottom: 0;">
+  <div class="uq-container">
+    <div class="uq-hero-basic__content">
+      <h1 class="uq-hero-basic__title" data-aos="fade-right">
+        <span class="uq-hero-basic__eyebrow" data-aos="fade-up" data-aos-delay="800">
+			${document.getElementById('moduleTitle').value}
+		  </span>
+        ${document.getElementById('lessonTitle').value}
+      </h1>
+      <div class="uq-hero-basic__back">  
+          <span class="uq-hero-subheading" data-aos="fade-down" data-aos-delay="1200">
+			  ${document.getElementById('heroSubheading').value}
+		  </span>
+      </div>
+    </div>
+  </div>
+</div>	
+    `;
+    document.getElementById('preview').innerHTML = previewHtml;
+    AOS.init({ duration: 1200, offset: 50 });
+  }
+  // Expose updatePreview globally so imagePicker.js can call it.
+  window.updatePreview = updatePreview;
+
+  function copyToClipboard() {
+    const previewClone = document.getElementById('preview').cloneNode(true);
+    previewClone.querySelectorAll('.aos-init, .aos-animate').forEach(el => {
+      el.classList.remove('aos-init');
+      el.classList.remove('aos-animate');
+    });
+    const htmlToCopy = `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>UQ Purple heading + Image + Statement D</title>
+  <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"><\/script>
+</head>  
+<body>  
+${previewClone.innerHTML}
+<script>
+AOS.init({
+  duration: 1200,
+  offset: 50
+})
+<\/script>  
+</body>
+</html>`;
+    navigator.clipboard.writeText(htmlToCopy).then(() => {
+      alert('Copied to clipboard!');
+    }).catch(err => {
+      alert('Error copying: ' + err);
+    });
+  }
+  
+  // Attach event listeners to update preview when inputs change
+  ['moduleTitle', 'lessonTitle', 'heroSubheading'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updatePreview);
+  });
+  updatePreview();
+  AOS.init({ duration: 1200, offset: 50 });
+	 
+	 
+
+	 
+</script>
+
+</body>
+</html>
