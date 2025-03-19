@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+</head>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+	<style>
+	body {
+      font-family: Arial, sans-serif;
+	  padding: 20px;
+      background-color: #f8f8f8!important;
+    }
+	.uqgenerator-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0px;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border: 1px solid #CDCDCD;
+    }
+	.uq-hero-basic__content, .uq-animated-gradient, .uq-card__title {
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+	</style>
+	
+<body>
+	<div class="uqgenerator-container">
+		<div class="uq-hero-basic" style="margin-bottom: 0;">
+    		<div class="uq-hero-basic__content">
+				  <h1 class="uq-hero-basic__title" data-aos="fade-right">
+					<span class="uq-hero-basic__eyebrow" data-aos="fade" data-aos-delay="1200">UQ BIN</span>
+					Alerts
+				  </h1>    
+					<span class="uq-hero-subheading" data-aos="fade" data-aos-delay="1400" data-aos-offset="10px">The alert components are used to notify users of important information or changes on a page attracting the user's attention without interrupting the user's task. The alerts are mainly categorised as page alerts and global alerts.</span>
+      		</div>
+    </div>
+		<div class="uq-container">
+		<h2>Page Alerts</h2>
+	<p>Page alerts are light variants of alerts that are used locally on pages along with components or on its own to notify users of important information or changes on a page. However, the existing role alerts take on a unique role for screen readers. When a <code>role="alert"</code> is found on the page by a screen reader, it will stop what it is currently narrating and then say, <code>alert</code> followed by what is written within the tag. Additionally, you can only have one "alert" per web page, and the last <code>div</code> element is the one that will be read by the screen reader. This is <strong>not</strong> what we recommend to use in a normal learning module, and therefore have elected to <strong>designate them as notes instead</strong>. A <code>role="note"</code> is used when the content is supplementary to the material on the page, and not essential to the main topic. For example, on a module page written about statistics, we can instruct a student that a copy of the reading materials is located at a link, and a note that only a certain number of students may view it at any one point.</p>
+	<p>This material has been adapted from: <a href="https://design-system.uq.edu.au/?path=/docs/components-alert--docs" target="_blank">https://design-system.uq.edu.au/?path=/docs/components-alert--docs</a></p>
+	<h3>To get started:</h3>
+	<p>Make sure that you have all of the CSS code linked into the page:</p>
+		<code style="padding: 1rem; display: block; background-color: var(--grey-50); border: 1px solid var(--grey-800); border-radius: .5rem;">
+			&lt;link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" /&gt;<br>
+			&lt;script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"&gt;&lt;/script&gt;
+		</code><br>
+	<p>If you want <strong>animations</strong>, then you'll also need to load in the animations CSS and Javascript too:</p>
+	<code style="padding: 1rem; display: block; background-color: var(--grey-50); border: 1px solid var(--grey-800); border-radius: .5rem;">
+		&lt;!-- Put the following at the <em>bottom</em> of the page before closing out the body --&gt;<br>
+		&lt;script&gt;<br>
+		  AOS.init({<br>
+		  duration: 1200,<br>
+		  offset: 20,<br>		
+		})<br>
+		&lt;/script&gt;
+	</code><br>	
+	<p>For more information about how the animation properties work, see AOS github repository: <a href="https://github.com/michalsnik/aos?tab=readme-ov-file" target="_blank">https://github.com/michalsnik/aos?tab=readme-ov-file</a>.</p><br>
+</div>	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<div class="uq-container">	
+<h2>Examples:</h2>	
+	<p>Please see the examples below:</p>
+	
+	
+	
+	
+<div class="uq-alert uq-alert--info uqbs-rounded-border--all" role="note" data-aos="zoom-in" style="width: 80%; margin: 0 auto;">
+  <div class="uq-alert__message">
+    <span>
+      <strong>uq-alert--info</strong>. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </span>
+  </div>
+</div>	
+<div class="styled-code" style="margin: 16px 32px 48px 32px; padding: 8px; border: 1px solid grey;">	
+<code>
+&lt;div class="uq-alert uq-alert--info" role="note" data-aos="zoom-in" style="width: 80%; margin: 0 auto;"><br>
+  &lt;div class="uq-alert__message"><br>
+    &lt;span>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    &lt;/span><br>
+  &lt;/div><br>
+&lt;/div>	
+</code>
+</div>	
+ 
+	
+<div class="uq-alert uq-alert--success uqbs-rounded-border--all" role="note" data-aos="zoom-in" style="width: 80%; margin: 0 auto;">
+  <div class="uq-alert__message">
+    <span>
+      <strong>uq-alert--success</strong>. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </span>
+  </div>
+</div>
+<div class="styled-code" style="margin: 16px 32px 48px 32px; padding: 8px; border: 1px solid grey;">	
+<code>
+&lt;div class="uq-alert uq-alert--success" role="note" data-aos="zoom-in" style="width: 80%; margin: 0 auto;"><br>
+  &lt;div class="uq-alert__message"><br>
+    &lt;span>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    &lt;/span><br>
+  &lt;/div><br>
+&lt;/div>	
+<br>
+</code>
+</div>		
+
+<div class="uq-alert uq-alert--warning uqbs-rounded-border--all" role="note" data-aos="zoom-in" style="width: 80%; margin: 0 auto;">
+  <div class="uq-alert__message">
+    <span>
+      <strong>uq-alert--warning</strong>. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </span>
+  </div>
+</div>
+<div class="styled-code" style="margin: 16px 32px 48px 32px; padding: 8px; border: 1px solid grey;">	
+<code>
+&lt;div class="uq-alert uq-alert--warning" role="note" data-aos="zoom-in" style="width: 80%; margin: 0 auto;"><br>
+  &lt;div class="uq-alert__message"><br>
+    &lt;span>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    &lt;/span><br>
+  &lt;/div><br>
+&lt;/div>	
+<br>
+</code>
+</div>		
+
+<div class="uq-alert uq-alert--error" role="note" data-aos="zoom-in" style="width: 80%; margin: 0 auto;">
+  <div class="uq-alert__message">
+    <span>
+      <strong>uq-alert--error</strong>. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </span>
+  </div>
+</div>
+<div class="styled-code" style="margin: 16px 32px 48px 32px; padding: 8px; border: 1px solid grey;">	
+<code>
+&lt;div class="uq-alert uq-alert--error" role="note" data-aos="zoom-in" style="width: 80%; margin: 0 auto;"><br>
+  &lt;div class="uq-alert__message"><br>
+    &lt;span>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    &lt;/span><br>
+  &lt;/div><br>
+&lt;/div>	
+<br>
+</code>
+</div>		
+</div>	
+		</div>
+	</div>
+<script>
+  AOS.init({ duration: 1200, offset: 50 });	
+	</script>	
+</body>
+</html>
