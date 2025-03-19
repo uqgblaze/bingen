@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Course Profile Link Generator with Preview</title>
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>	
+  <!-- Minimal styling just for the generator controls -->
+  <style>
+	  body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8!important;
+    }
+	  .uqgenerator-container {
+      max-width: 1200px;
+      margin: 1rem auto;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border: 1px solid #CDCDCD;
+    }
+    .generator-container {
+      margin: 20px auto;
+      text-align: center;
+      font-family: sans-serif;
+      max-width: 600px;
+    }
+    .generator-container input {
+      padding: 8px;
+      margin: 8px;
+      width: 220px;
+      font-size: 16px;
+    }
+    .generator-container button {
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    .preview-container {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+    }
+    .preview-container iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="uqgenerator-container">
+	<h2>Course Profile Link Generator</h2>
+	<div style="margin-bottom: 24px;"> 
+   	<p>Enter an 8-digit course code (e.g. <code>ABCD1234</code>)</p>
+		<input type="text" id="courseCode" placeholder="ABCD1234">
+	</div>  
+  <button class="uq-button uq-button--large uq-button--expand" onclick="copySnippet()" ><span class="uq-icon uq-icon--standard--common-file-double"></span>Copy to Clipboard</button>
+
+  <!-- Live Preview -->
+  <div class="preview-container">
+    <h3>Live Preview</h3>
+    <iframe id="previewFrame"></iframe>
+  </div>
+</div>
+
+<script>
+/**
+ * This template includes:
+ *  - <link> references for styles
+ *  - <script> reference for AOS
+ *  - The reading list button and fallback link
+ * 
+ * We use %%COURSE_CODE%% as a placeholder to be replaced at runtime.
+ * Note: Mind the trailing spaces so you don't get extended underlines!
+ */
+const snippetTemplate = `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Course Profile Link Generator</title>
+
+  <!-- Standard UQ Style Sheets -->
+  <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+
+  <!-- ANIMATE IT! (AOS) -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"><\/script>
+
+  <style>
+    .uq-button {color: #fff;}
+    .bb-link-hover {background-color: transparent!important;}
+  </style>
+</head>
+<body>
+
+  <div class="uq-container">
+    <a class="uq-button uq-button--large uq-button--expand"
+       href="https://programs-courses.uq.edu.au/course.html?course_code=%%COURSE_CODE%%" target="_blank">
+      <span class="uq-icon uq-icon--how-youll-learn--seo-search-page"></span>
+      View Course Profile
+    </a>
+    <p class="text-center" style="margin-top: 8px;">
+      Note: If the button above is not working, try using the following link:
+      <a class="bb-link-hover" href="https://programs-courses.uq.edu.au/course.html?course_code=%%COURSE_CODE%%" target="_blank">https://programs-courses.uq.edu.au/course.html?course_code=%%COURSE_CODE%%</a>
+    </p>
+  </div>
+
+</body>
+</html>`;
+
+
+/**
+ * Updates the preview iframe with the current snippet, so it reflects
+ * whatever course code has been typed.
+ */
+function updatePreview() {
+  const rawCode = document.getElementById("courseCode").value.trim();
+
+  // If we don't have exactly 8 characters, show a placeholder or an empty preview
+  if (rawCode.length !== 8) {
+    document.getElementById("previewFrame").srcdoc = "<p style='text-align:center;font-family:sans-serif;margin-top:50px;'>Enter an 8-digit code to see a preview.</p>";
+    return;
+  }
+
+  // Convert to lower-case for the final snippet
+  const courseCode = rawCode.toLowerCase();
+
+  // Replace placeholders in the template
+  const finalSnippet = snippetTemplate.replace(/%%COURSE_CODE%%/g, courseCode);
+
+  // Show it in the iframe
+  document.getElementById("previewFrame").srcdoc = finalSnippet;
+}
+
+function copySnippet() {
+  const rawCode = document.getElementById("courseCode").value.trim();
+  if (rawCode.length !== 8) {
+    alert("Please enter an 8-digit course code (e.g. ABCD1234).");
+    return;
+  }
+  const courseCode = rawCode.toLowerCase();
+  const finalSnippet = snippetTemplate.replace(/%%COURSE_CODE%%/g, courseCode);
+  navigator.clipboard.writeText(finalSnippet).then(() => {
+    alert("Complete HTML snippet copied to clipboard!");
+  }).catch(err => {
+    alert("Error copying snippet: " + err);
+  });
+}
+
+// Check localStorage for a saved course code on page load.
+document.addEventListener("DOMContentLoaded", function() {
+  const storedCode = localStorage.getItem("courseCode");
+  if (storedCode) {
+    document.getElementById("courseCode").value = storedCode;
+    updatePreview();
+  }
+});
+
+// Update preview whenever the user types or changes the input
+document.getElementById("courseCode").addEventListener("input", updatePreview);
+
+// Initialize the preview on page load (shows placeholder if no code typed yet)
+updatePreview();
+</script>
+
+</body>
+</html>
