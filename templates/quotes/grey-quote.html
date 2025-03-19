@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quote iFrame Code Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f8f8f8!important;
+    }
+    label {
+      font-weight: bold;
+      color: #51247a;
+    }
+    input, button, textarea {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    #heightInput {
+      background-color: #f8f8f8;
+    }
+    #heightInput:hover {
+      background-color: #fff;
+    }
+    textarea#quoteInput {
+      height: 150px; /* Larger height for multi-line input */
+    }
+    .iframe-preview {
+      border: 1px solid #ccc;
+      margin-top: 20px;
+      padding: 10px;
+    }
+    .iframe-container {
+      margin-top: 20px;
+      border: 2px dotted #ddd;
+      padding: 0px;
+      max-width: 1200px;
+      min-height: 50px;
+    }
+    .subtitle {
+      font-size: 0.8em;
+      color: #999490;
+    }
+    .center-all {
+      max-width: 1200px;
+      margin: 1rem auto;
+      width: 100%;
+      padding: 0 15px;
+      box-sizing: border-box;
+      background-color: #fff;
+      padding-bottom: 20px;
+      padding-top: 10px;
+	  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border: 1px solid #CDCDCD;	
+    }
+    .text-block {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    .copyright-notice {
+      padding-top: 15px;
+      color: #D7D1CC;
+      font-size: 0.7em;
+    }
+  </style>
+  <script>
+    function generateIframeCode() {
+      // Encode the quote, replacing newlines with <br> for HTML display
+      const quote = encodeURIComponent(document.getElementById("quoteInput").value.replace(/\n/g, "<br>"));
+      const author = encodeURIComponent(document.getElementById("authorInput").value);
+      const source = encodeURIComponent(document.getElementById("sourceInput").value);
+      const height = document.getElementById("heightInput").value || 550;
+
+      const iframeCode = `<iframe title="Quote Banner" height="${height}px" width="100%" src="https://uqgblaze.github.io/UQ-Swoosh/dev/flex-quote-grey.html?quote=${quote}&author=${author}&source=${source}" frameborder="0" scrolling="no" style="max-width:1200px;"></iframe>`;
+
+      document.getElementById("iframeCodeOutput").value = iframeCode;
+      document.getElementById("iframePreview").innerHTML = iframeCode;
+    }
+
+    function copyToClipboard() {
+      const iframeCodeText = document.getElementById("iframeCodeOutput");
+      iframeCodeText.select();
+      document.execCommand("copy");
+      alert("iFrame code copied to clipboard!");
+    }
+  </script>
+</head>
+<body>
+<div class="center-all">
+    <div class="iframe-preview">
+      <h3>iFrame Preview:</h3>
+      <div id="iframePreview" class="iframe-container">
+        <!-- iFrame preview will display here -->
+      </div>
+    </div>
+  <div class="text-block">
+    <h1 style="color: #51247A;">Quote iFrame Generator</h1>
+    <label for="quoteInput">Quote Text:</label><br>
+    <span class="subtitle">To add line breaks, use "Shift + Enter" on your keyboard.</span>
+    <textarea id="quoteInput" placeholder="Enter the quote" value="Enter your quote here" oninput="generateIframeCode()"></textarea>
+
+    <label for="authorInput">Author Name:</label>
+    <input type="text" id="authorInput" placeholder="Enter the author's name" oninput="generateIframeCode()">
+
+    <label for="sourceInput">Source Title or URL:</label><br>
+    <span class="subtitle">You can enter <i>either</i> a source name or a URL. If a URL is detected (if it starts with http or https), then it will automatically convert it into a hyperlink that will open in a new window.</span>
+    <input type="text" id="sourceInput" placeholder="Enter the source" oninput="generateIframeCode()">
+
+    <label for="heightInput">Optional: Adjust iFrame Height (in pixels):</label><br>
+    <span class="subtitle">default settings: height = 450px; | width = 100%; max-width = 1200px;</span>
+    <input type="number" id="heightInput" placeholder="Enter height in pixels" oninput="generateIframeCode()" value="550">
+
+    <label>Generated iFrame Code:</label>
+    <textarea id="iframeCodeOutput" readonly></textarea>
+
+    <button onclick="copyToClipboard()">Copy Code</button>
+
+
+    <h4>Changelog:</h4>
+    <ul style="font-size: small">
+      <li><b>29 October, 2024:</b> Made this generator after a conversation with a peer. Ensured brand consistency with typography for quotes. Added URL support for referencing.</li>
+    </ul>
+    <div class="copyright-notice" align="center">Thanks, <a href="https://business.uq.edu.au/profile/1895/geoffrey-blazer">GB</a>. © The University of Queensland, 2025.</div>
+  </div>
+</div>
+</body>
+</html>
