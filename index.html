@@ -30,7 +30,7 @@
           <ul class="block-types">
             <li class="active" data-target="tab-hero">Hero Headings</li>
             <li data-target="tab-text">Text</li>
-            <li data-target="tab-activity">Activity</li>
+            <li data-target="tab-button">Button</li>
             <li data-target="tab-statement">Statement</li>
             <li data-target="tab-quote">Quote</li>
             <li data-target="tab-list">List</li>
@@ -103,6 +103,18 @@
             </div>  
           </div>
         
+			
+			<!-- 03. Button content -->
+          <div id="tab-button" class="preview-content">
+            <h3>Quote Blocks</h3>
+            <button class="card" type="button" data-url="https://uqgblaze.github.io/bingen/templates/button/course-profile.html">
+              <div class="card-subheading">Course Profile Button</div>
+              <div class="card-cover">
+                <img src="https://uqgblaze.github.io/bingen/thumbs/button-course-profile.png" alt="Course Profile Button" />
+              </div>
+            </button>
+            <!-- Additional sub cards… -->
+          </div>
           <!-- 04. Quote content -->
           <div id="tab-quote" class="preview-content">
             <h3>Quote Blocks</h3>
@@ -235,15 +247,31 @@
       <span class="close" id="close-modal">&times;</span>
       <h2>Settings</h2>
       <form id="settings-form">
-        <label for="course-code">Course Code:</label>
-        <input type="text" id="course-code" name="course-code" required />
+        <label for="course-code">Course Code: (deprecated)</label>
+        <input type="text" id="course-code" name="course-code" />
+		<br>
+		<label for="settingsCourseCode">Course Code: (current)</label>
+			<input type="text" id="settingsCourseCode" placeholder="Enter 8-digit course code">
+			<button onclick="saveCourseCode()">Save Course Code</button>
+		 <br> 
         <label for="api-key">API Key:</label>
-        <input type="text" id="api-key" name="api-key" required />
+        <input type="text" id="api-key" name="api-key" />
         <button type="submit">Save</button>
       </form>
     </div>
   </div>
-  
+  <script>
+  function saveCourseCode() {
+    const code = document.getElementById("settingsCourseCode").value.trim();
+    if (code.length === 8) { 
+      // Save to localStorage so other pages can read it.
+      localStorage.setItem("courseCode", code);
+      alert("Course code saved!");
+    } else {
+      alert("Please enter a valid 8-digit course code (e.g. ABCD1234).");
+    }
+  }
+</script>
   <script src="https://uqgblaze.github.io/bingen/script.js"></script>
 </body>
 </html>
