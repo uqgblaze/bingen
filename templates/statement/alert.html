@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Statement B</title>
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <style>
+    /* All your existing CSS remains unchanged */
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+    }
+    .uqgenerator-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border: 1px solid #CDCDCD;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .preview-container {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed #CDCDCD;
+    }
+    button {
+      padding: 10px;
+      background-color: #51247a;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .icon-button {
+      vertical-align: middle;
+      background: none;
+      border: 1px solid #CDCDCD;
+      color: #555;
+      line-height: 1.6;
+      width: 100%;
+      cursor: pointer;
+    }
+    .icon-button svg {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      fill: #51247a;
+      margin-right: 8px;
+      line-height: 1.6;
+    }
+    code{
+      background-color: #E8E8E8;
+      border-radius: 4px;
+    }
+    .preview-color-button{
+      display: block;
+      height: 16px;
+      width: 16px;
+      border-radius: 4px;
+    }
+	  .color-row{
+		  display: block;
+		  width: 100%;
+		  margin: 10px 0;
+	  }
+	  .color-row button{
+		  border: 1px solid #262626;
+		  color: #262626;
+		  border-radius: 4px;
+	  }
+  </style>
+</head>
+<body>
+  <div class="uq-container"> 
+    <div class="uqgenerator-container">
+      <!-- Live Preview Section -->
+      <div id="preview" class="preview-container"></div>
+
+      <!-- Input Fields -->
+      <label>Statement Text</label>
+	  <p>You can read more about alerts in the information document: <a href="https://uqgblaze.github.io/bingen/templates/statement/alert-info.html" target="_blank">https://uqgblaze.github.io/bingen/templates/statement/alert-info.html</a></p>
+      <p>For <strong class="uqbs-font-weight-heavy">bold text</strong>, use either <code>&lt;b&gt;bold&lt;/b&gt;</code> or <code>&lt;strong&gt;your text here&lt;/strong&gt;</code>. <br>You can insert a line-break by typing in <code>&lt;br&gt;</code>.</p>
+      <textarea id="statementText" placeholder="Enter text here">&lt;b&gt;This is the Statement C (grey) text&lt;/b&gt;. &lt;br&gt; Fill your text in here, then click on the &lt;b&gt;copy&lt;/b&gt; button below.</textarea>
+    
+      <label>Change color</label>
+      <p>Click on the colors below to change the colors:</p>
+      <!-- Row 1 -->
+		<div class="color-row">
+      <button id="bg-black" class="uq-alert--info">Info Blue</button>
+      <button id="bg-white" class="uq-alert--success">Success Green</button>
+      <button id="bg-purple" class="uq-alert--warning">Warning Yellow</button>
+	  <button id="bg-light-purple" class="uq-alert--error">Error Red</button> 		
+		</div>
+
+      <br>
+      <button class="uq-button uq-button--large uq-button--expand" onclick="copyToClipboard()">
+        <span class="uq-icon uq-icon--standard--common-file-double"></span>
+        Copy to Clipboard
+      </button>
+    </div>
+  </div>
+
+  <!-- Style sheet - to be applied to master version: uqbs-bsan.css -->
+  <style>
+    .uqbs-font-weight-normal{
+      font-weight: 400;
+    }
+    .uqbs-font-weight-normal b, .uqbs-font-weight-normal strong{
+      font-weight: bolder;
+    }
+    .uqbs-font-weight-heavy{
+      font-weight: bolder;
+    }
+  </style>	
+  
+  <!-- Inline Preview & Clipboard Script (custom per generator) -->
+  <script>
+    // Global variable to store the current background (and extra) classes.
+    let currentBgClasses = "uq-alert--info";
+
+    function updatePreview() {
+      const previewHtml = `
+        <body>
+  <div class="uq-alert uqbs-rounded-border--all ${currentBgClasses}" role="note" data-aos="zoom-in" style="width: 80%; margin: 0 auto;">
+        <div class="uq-alert__message">
+          <span>${document.getElementById('statementText').value}</span>
+          </h3>
+        </div>	
+  </div>	
+        `;
+      document.getElementById('preview').innerHTML = previewHtml;
+      AOS.init({ duration: 1200, offset: 50 });
+    }
+    // Expose updatePreview globally so imagePicker.js can call it.
+    window.updatePreview = updatePreview;
+
+    function copyToClipboard() {
+      const previewClone = document.getElementById('preview').cloneNode(true);
+      previewClone.querySelectorAll('.aos-init, .aos-animate').forEach(el => {
+        el.classList.remove('aos-init');
+        el.classList.remove('aos-animate');
+      });
+      const htmlToCopy = `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Statement C</title>
+  <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"><\/script>
+</head>  
+<body>  
+${previewClone.innerHTML}
+<script>
+AOS.init({
+  duration: 1200,
+  offset: 50
+})
+<\/script>  
+</body>
+</html>`;
+      navigator.clipboard.writeText(htmlToCopy).then(() => {
+        alert('Copied to clipboard!');
+      }).catch(err => {
+        alert('Error copying: ' + err);
+      });
+    }
+    
+    // Attach event listeners for the text area so preview updates on input.
+    document.getElementById('statementText').addEventListener('input', updatePreview);
+
+    // Attach event listeners to all color buttons
+    document.querySelectorAll("button[id^='bg-']").forEach(button => {
+      button.addEventListener("click", function() {
+        // Set currentBgClasses to the clicked button's classes.
+        currentBgClasses = button.className;
+        updatePreview();
+      });
+    });
+
+    updatePreview();
+    AOS.init({ duration: 1200, offset: 50 });
+  </script>
+
+</body>
+</html>
