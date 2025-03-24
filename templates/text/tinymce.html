@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rich-Text Editor</title>
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" /><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <!-- Include TinyMCE (replace this CDN with your local path if self-hosting) -->
+  <script src="https://uqgblaze.github.io/bingen/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+
+  <style>
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+    }
+    .uq-hero-basic__content, .uq-animated-gradient, .uq-card__title {
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+    .uqgenerator-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border: 1px solid #CDCDCD;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .preview-container {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed #CDCDCD;
+    }
+    button {
+      padding: 10px;
+      background-color: #51247a;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .icon-button {
+      vertical-align: middle;
+      background: none;
+      border: 1px solid #CDCDCD;
+      color: #555;
+      line-height: 1.6;
+      width: 100%;
+      cursor: pointer;
+    }
+    .icon-button svg {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      fill: #51247a;
+      margin-right: 8px;
+      line-height: 1.6;
+    }
+    code{
+      background-color: #E8E8E8;
+      border-radius: 4px;
+    }
+    .preview-color-button{
+      display: block;
+      height: 16px;
+      width: 16px;
+      border-radius: 4px;
+    }
+    .color-row{
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+    }
+  </style>
+	
+</head>
+<body>
+  <div class="uq-container"> 
+    <div class="uqgenerator-container">
+      <!-- Live Preview Section -->
+      <div id="preview" class="preview-container"></div>
+
+      <!-- Input Fields -->
+      <label>Statement Text</label>
+      <p>For <strong class="uqbs-font-weight-heavy">bold text</strong>, use either <code>&lt;b&gt;bold&lt;/b&gt;</code> or <code>&lt;strong&gt;your text here&lt;/strong&gt;</code>.<br>You can insert a line-break by typing in <code>&lt;br&gt;</code>.</p>
+      <textarea id="statementText" placeholder="Enter text here">This is your text in preview.</textarea>
+    
+      <label>Change color</label>
+      <p>Click on the colors below to change the colors:</p>
+      <!-- Row 1 -->
+      <div class="color-row">
+        <button id="bg-black" class="bg-black">Black</button>
+        <button id="bg-white" class="bg-white">White</button>
+        <button id="bg-purple" class="bg-purple">Purple</button>
+      </div>
+      <!-- Row 2 --> 
+      <div class="color-row">
+        <button id="bg-light-purple" class="bg-light-purple">Light Purple</button> 
+        <button id="bg-red" class="bg-red">Red</button>
+        <button id="bg-orange" class="bg-orange">Orange</button>
+        <button id="bg-yellow" class="bg-yellow">Yellow</button>
+        <button id="bg-gold" class="bg-gold">Gold</button>
+        <button id="bg-green" class="bg-green">Green</button> 
+        <button id="bg-blue" class="bg-blue">Blue</button>
+        <button id="bg-aqua" class="bg-aqua">Aqua</button>
+      </div>
+      <!-- Row 3 --> 
+      <div class="color-row">
+        <button id="bg-neutral" class="bg-neutral">Neutral</button>  
+        <button id="bg-neutral20" class="bg-neutral20">Neutral20</button>   
+        <button id="bg-neutral40" class="bg-neutral40">Neutral40</button>  
+        <button id="bg-neutral60" class="bg-neutral60">Neutral60</button>  
+        <button id="bg-neutral80" class="bg-neutral80">Neutral80</button>
+      </div>	
+      <!-- Row 4 --> 
+      <div class="color-row">
+        <button id="bg-dark-grey" class="bg-dark-grey">Dark Grey</button>
+        <button id="bg-dark-grey20" class="bg-dark-grey20 text-black">Dark Grey20</button>
+        <button id="bg-dark-grey40" class="bg-dark-grey40 text-black">Dark Grey40</button>
+        <button id="bg-dark-grey60" class="bg-dark-grey60 text-black">Dark Grey60</button>
+        <button id="bg-dark-grey80" class="bg-dark-grey80 text-black">Dark Grey80</button>
+      </div>
+      <br>
+      <button class="uq-button uq-button--large uq-button--expand" onclick="copyToClipboard()">
+        <span class="uq-icon uq-icon--standard--common-file-double"></span>
+        Copy to Clipboard
+      </button>
+    </div>
+  </div>
+
+  <!-- Additional Styles -->
+  <style>
+    .uq-animated-gradient-b{
+      display: block;
+      margin: 0 auto 16px;
+      background: var(--uq-purple);
+      height: 8px;
+      width: 100px;
+      padding: 0;
+      border-radius: 5px;
+    }
+    .uqbs-tinymce{
+      display: block;
+      width: 100%!important;
+      height: auto;
+      padding: 32px;
+	  margin-bottom: 0;	
+    }
+    .uqbs-font-weight-normal{
+      font-weight: 400;
+    }
+    .uqbs-font-weight-normal b, .uqbs-font-weight-normal strong{
+      font-weight: bolder;
+    }
+    .uqbs-font-weight-heavy{
+      font-weight: bolder;
+    }
+  </style>	
+  
+  <!-- Inline Preview & Clipboard Script -->
+  <script>
+    // Global variable to store the current background (and extra) classes.
+    let currentBgClasses = "bg-white";
+
+    // Function to update the preview using content from TinyMCE (if available)
+    function updatePreview() {
+      const content = tinymce.get('statementText') ? tinymce.get('statementText').getContent() : document.getElementById('statementText').value;
+      const previewHtml = `
+        <div class="uqbs-tinymce uqbs-rounded-border--all ${currentBgClasses}" data-aos="fade" data-aos-delay="0">
+          <div class="uq-container">
+              ${content}
+          </div>	
+        </div>
+      `;
+      document.getElementById('preview').innerHTML = previewHtml;
+      AOS.init({ duration: 1200, offset: 50 });
+    }
+
+    // Initialise TinyMCE on the textarea.
+    tinymce.init({
+      selector: '#statementText',
+	   	font_formats: 'Open Sans=Open Sans, sans-serif; Merriweather=Merriweather, serif; Arial=arial,helvetica,sans-serif; Roboto=Roboto, sans-serif; Montserrat=Montserrat, sans-serif; Atkinson Hyperlegible=Atkinson Hyperlegible, sans-serif;',
+  		content_style: 'body { font-family: "Open Sans", sans-serif; font-size:0.875rem }',
+		block_formats: 'Title=h4;Heading=h5;Subheading=h6;Paragraph=p',
+	  plugins: [
+      // Core editing features
+      'anchor', 'accordion', 'autolink', 'autoresize', 'charmap', 'code', 'codesample', 'codesample code', 'emoticons', 'fullscreen', 'image', 'importcss', 'link', 'lists advlist', 'media', 'preview', 'quickbars', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+      // Your account includes a free trial of TinyMCE premium features
+      // Try the most popular premium features until Jan 20, 2025:
+     // 'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf' //
+    ],
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough backcolor forecolor |  codesample code importcss preview visualblocks | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen',
+	  advlist_bullet_styles: 'default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman',
+	  quickbars_selection_toolbar: 'bold italic | blocks | quicklink forecolor blockquote',
+	  visualblocks_default_state: false,
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' },
+    ],
+    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+	codesample_languages: [
+    { text: 'HTML/XML', value: 'markup' },
+    { text: 'JavaScript', value: 'javascript' },
+    { text: 'CSS', value: 'css' },
+    { text: 'PHP', value: 'php' },
+    { text: 'Ruby', value: 'ruby' },
+    { text: 'Python', value: 'python' },
+    { text: 'Java', value: 'java' },
+    { text: 'C', value: 'c' },
+    { text: 'C#', value: 'csharp' },
+    { text: 'C++', value: 'cpp' }
+  ],  	
+      setup: function(editor) {
+        // Update preview when the editor is fully initialized.
+        editor.on('init', function() {
+          updatePreview();
+        });
+        // Update preview on content changes.
+        editor.on('keyup change', function() {
+          updatePreview();
+        });
+      }
+    });
+
+    // Fallback: update preview on native input events if TinyMCE isn’t active.
+    document.getElementById('statementText').addEventListener('input', updatePreview);
+
+    // Attach event listeners to all color buttons.
+    document.querySelectorAll("button[id^='bg-']").forEach(button => {
+      button.addEventListener("click", function() {
+        // Update the current background class and refresh the preview.
+        currentBgClasses = button.className;
+        updatePreview();
+      });
+    });
+
+    // Initial preview update.
+    updatePreview();
+    AOS.init({ duration: 1200, offset: 50 });
+
+    // Copy-to-clipboard function remains unchanged.
+    function copyToClipboard() {
+      const previewClone = document.getElementById('preview').cloneNode(true);
+      previewClone.querySelectorAll('.aos-init, .aos-animate').forEach(el => {
+        el.classList.remove('aos-init');
+        el.classList.remove('aos-animate');
+      });
+      const htmlToCopy = `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Rich-Text Editor</title>
+  <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"><\/script>
+</head>  
+<body>  
+${previewClone.innerHTML}
+<script>
+AOS.init({
+  duration: 1200,
+  offset: 50
+})
+<\/script>  
+</body>
+</html>`;
+      navigator.clipboard.writeText(htmlToCopy).then(() => {
+        alert('Copied to clipboard!');
+      }).catch(err => {
+        alert('Error copying: ' + err);
+      });
+    }
+  </script>
+
+</body>
+</html>
