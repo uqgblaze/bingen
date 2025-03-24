@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Rich-Text Editor</title>
-  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" /><link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 	
@@ -199,17 +200,42 @@
     // Initialise TinyMCE on the textarea.
     tinymce.init({
       selector: '#statementText',
-	   	font_formats: 'Open Sans=Open Sans, sans-serif; Merriweather=Merriweather, serif; Arial=arial,helvetica,sans-serif; Roboto=Roboto, sans-serif; Montserrat=Montserrat, sans-serif; Atkinson Hyperlegible=Atkinson Hyperlegible, sans-serif;',
-  		content_style: 'body { font-family: "Open Sans", sans-serif; font-size:0.875rem }',
+		font_family_formats: 'Atkinson Hyperlegible=Atkinson Hyperlegible, sans-serif; Arial=Arial, Helvetica, sans-serif; Merriweather=Merriweather, serif; Montserrat=Montserrat, sans-serif; Open Sans=Open Sans, sans-serif; Roboto=Roboto, sans-serif; Atkinson Hyperlegible=Atkinson Hyperlegible, sans-serif;',
+  		content_css: [
+  		'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap'
+		],
+  		content_style: 'body { font-family: "Open Sans", sans-serif; font-size: 0.875rem; }p { margin: 0; }',
 		block_formats: 'Title=h4;Heading=h5;Subheading=h6;Paragraph=p',
+		color_map: [
+			'#51247A', 'UQ Purple',    		// --uq-purple
+			'#000000', 'UQ Black',     		// --uq-black
+			'#FFFFFF', 'UQ White',     		// --uq-white
+			'#2EA836', 'UQ Green',     		// --uq-green
+			'#E62645', 'UQ Red',       		// --uq-red
+			'#962A8B', 'UQ Light Purple', 	// --uq-light-purple
+			'#1F0029', 'UQ Dark Purple',  	// --uq-dark-purple
+			'#BB9D65', 'UQ Gold',      		// --uq-gold
+			'#FBB800', 'UQ Yellow',    		// --uq-yellow
+			'#EB602B', 'UQ Orange',    		// --uq-orange
+			'#4085C6', 'UQ Blue',      		// --uq-blue
+			'#00A2C7', 'UQ Aqua',       		// --uq-aqua
+			'#262626', 'Blackboard Default', // --bb-default --bb-default: rgb(38, 38, 38);
+    		'#2075A3', 'Blackboard Link',	// --bb-link: #2075A3;
+			'#666666', 'Blackboard Grey',
+			'#A234B5', 'Blackboard Purple',
+			'#046EF6', 'Blackboard Blue',
+			'#1C8845', 'Blackboard Green',
+			'#E72218', 'Blackboard Red',
+		  ],
+  		color_cols: 4,
 	  plugins: [
       // Core editing features
-      'anchor', 'accordion', 'autolink', 'autoresize', 'charmap', 'code', 'codesample', 'codesample code', 'emoticons', 'fullscreen', 'image', 'importcss', 'link', 'lists advlist', 'media', 'preview', 'quickbars', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+      'anchor', 'accordion', 'autolink', 'autoresize', 'charmap', 'code', 'codesample', 'codesample code', 'help', 'emoticons', 'fullscreen', 'image', 'importcss', 'link', 'lists', 'advlist', 'media', 'pagebreak', 'preview', 'quickbars', 'searchreplace', 'table', 'visualblocks', 'wordcount',
       // Your account includes a free trial of TinyMCE premium features
       // Try the most popular premium features until Jan 20, 2025:
      // 'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf' //
     ],
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough backcolor forecolor |  codesample code importcss preview visualblocks | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough backcolor forecolor |  codesample code importcss preview visualblocks | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen | help',
 	  advlist_bullet_styles: 'default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman',
 	  quickbars_selection_toolbar: 'bold italic | blocks | quicklink forecolor blockquote',
 	  visualblocks_default_state: false,
@@ -273,6 +299,9 @@
   <meta charset="utf-8">
   <title>Rich-Text Editor</title>
   <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"><\/script>
 </head>  
 <body>  
