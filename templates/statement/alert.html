@@ -78,15 +78,82 @@
       border-radius: 4px;
     }
 	  .color-row{
-		  display: block;
+		  display: flex;
 		  width: 100%;
 		  margin: 10px 0;
+		  align-items: center;
+		  gap: 10px;
+		  vertical-align: middle;
 	  }
 	  .color-row button{
 		  border: 1px solid #262626;
 		  color: #262626;
 		  border-radius: 4px;
 	  }
+	  .uq-alert__message {
+		font-size: .875rem;
+		font-weight: 300;
+		line-height: 1.4;
+		margin-left: 2rem;
+		padding: 1rem;
+		position: relative;
+}
+	  .uqbs-alert--info{
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9.25' stroke='%232b2a29' stroke-width='1.5' transform='rotate(-180 12 12)'/%3E%3Cpath stroke='%232b2a29' stroke-linecap='round' stroke-width='1.5' d='M12 16.2v-4'/%3E%3Ccircle cx='12' cy='8.4' r='1.1' fill='%232b2a29' transform='rotate(-180 12 8.4)'/%3E%3C/svg%3E");
+		  font-size: 1.2rem;
+		  background-repeat: no-repeat;
+		  background-position: center center;
+		  font-weight: 300;
+		  line-height: 1.6;
+		  margin-left: 0.5rem;
+		  margin-right: 0.5rem;
+		  color: #000;
+		  display: inline-block;
+		  height: .9rem;
+		  width: .9rem;
+}
+	  .uqbs-alert--success{
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9.25' stroke='%232b2a29' stroke-width='1.5'/%3E%3Cpath stroke='%232b2a29' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M7 12.867 9.6 16l6.733-8'/%3E%3C/svg%3E");
+		  font-size: 1.2rem;
+		  background-repeat: no-repeat;
+		  background-position: center center;
+		  font-weight: 300;
+		  line-height: 1.6;
+		  margin-left: 0.5rem;
+		  margin-right: 0.5rem;
+		  color: #000;
+		  display: inline-block;
+		  height: .9rem;
+		  width: .9rem;
+}
+	  .uqbs-alert--warning {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9.25' stroke='%232b2a29' stroke-width='1.5'/%3E%3Cpath stroke='%232b2a29' stroke-linecap='round' stroke-width='1.5' d='M12 7.8v4'/%3E%3Ccircle cx='11.9' cy='15.6' r='.6' fill='%232b2a29' stroke='%232b2a29'/%3E%3C/svg%3E");
+		  font-size: 1.2rem;
+		  background-repeat: no-repeat;
+		  background-position: center center;
+		  font-weight: 300;
+		  line-height: 1.6;
+		  margin-left: 0.5rem;
+		  margin-right: 0.5rem;
+		  color: #000;
+		  display: inline-block;
+		  height: .9rem;
+		  width: .9rem;
+}
+	  .uqbs-alert--error {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%232b2a29' stroke-width='1.5' d='M20.127 18.545a1.18 1.18 0 0 1-1.055 1.706H4.929a1.18 1.18 0 0 1-1.055-1.706l7.072-14.143a1.179 1.179 0 0 1 2.109 0z'/%3E%3Cpath stroke='%232b2a29' stroke-linecap='round' stroke-width='1.5' d='M12 9v4'/%3E%3Ccircle cx='11.9' cy='16.601' r='1.1' fill='%232b2a29'/%3E%3C/svg%3E");
+		  font-size: 1.2rem;
+		  background-repeat: no-repeat;
+		  background-position: center center;
+		  font-weight: 300;
+		  line-height: 1.6;
+		  margin-left: 0.3rem;
+		  margin-right: 0.5rem;
+		  color: #000;
+		  display: inline-block;
+		  height: .9rem;
+		  width: .9rem;
+}
   </style>
 </head>
 <body>
@@ -105,10 +172,10 @@
       <p>Click on the colors below to change the colors:</p>
       <!-- Row 1 -->
 		<div class="color-row">
-      <button id="bg-black" class="uq-alert--info">Info Blue</button>
-      <button id="bg-white" class="uq-alert--success">Success Green</button>
-      <button id="bg-purple" class="uq-alert--warning">Warning Yellow</button>
-	  <button id="bg-light-purple" class="uq-alert--error">Error Red</button> 		
+      <button id="bg-black" class="uq-alert--info"><span class="uqbs-alert--info"></span>Info Blue</button>
+      <button id="bg-white" class="uq-alert--success"><span class="uqbs-alert--success"></span>Success Green</button>
+      <button id="bg-purple" class="uq-alert--warning"><span class="uqbs-alert--warning"></span>Warning Yellow</button>
+	  <button id="bg-light-purple" class="uq-alert--error"><span class="uqbs-alert--error"></span>Error Red</button> 		
 		</div>
 
       <br>
@@ -163,7 +230,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Statement C</title>
+  <title>Alert</title>
   <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"><\/script>
 </head>  
