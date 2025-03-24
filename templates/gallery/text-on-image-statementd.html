@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Heading + Image</title>
+  <title>Heading + Image + Statement D</title>
   <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <style>
@@ -225,11 +225,6 @@
       background: rgba(0, 0, 0, 0.5);
       pointer-events: none;
     }
-	  .uq-hero-basic-gradient{
-		  background-color: #262626; 
-	  } 
-	  .uq-hero-basic__image, .opacity65{ opacity: 0.65;
-	  }
   </style>
 </head>
 <body>
@@ -278,6 +273,10 @@
           <textarea id="heroSubheading" placeholder="This is the hero subheading. If you don't need this subheading, just leave this blank."></textarea>
         </div>
       </div>
+      <label>Statement Text</label>
+      <textarea id="statementText">
+This is the Statement D text. If you don't need this statement, then please use the other generator: Heading with Image.
+      </textarea>
       <button class="uq-button uq-button--large uq-button--expand" onclick="copyToClipboard()">
         <span class="uq-icon uq-icon--standard--common-file-double"></span>
         Copy to Clipboard
@@ -313,10 +312,10 @@
           <span class="uq-icon uq-icon--standard--information-circle uq-icon--light" style="margin-right: 0.25rem;"></span>${creditValue}
        </div>` : '';
     const previewHtml = `
-      <div class="uq-hero-basic uq-hero-basic-gradient uqbs-rounded-border--all" style="margin-bottom: 0;">
-        <div class="uq-hero-basic__image">
-          <img data-aos="fade" data-aos- opacity65duration="2400"
-               src="${document.getElementById('imageUrl').value}" alt="" class="uqbs-rounded-border--all">
+      <div class="uq-hero-basic uq-hero-basic-gradient uqbs-rounded-border--top" style="margin-bottom: 0;">
+        <div class="uq-hero-basic__image opacity65">
+          <img data-aos="fade" data-aos-duration="2400"
+               src="${document.getElementById('imageUrl').value}" alt="" class="uqbs-rounded-border--top">
         </div>
         <div class="uq-container">
           <div class="uq-hero-basic__content">
@@ -334,7 +333,15 @@
             ${creditHtml}
           </div>
         </div>
-      </div> 
+      </div>
+      <div class="uq-statementd uqbs-rounded-border--bottom" data-aos="fade" data-aos-delay="900">
+        <div class="uq-container">
+          <div class="uq-animated-gradient" data-aos="fade-right" data-aos-delay="1100"></div>
+          <h3 class="uq-card__title" data-aos="fade" data-aos-delay="1100" style="font-size: 1.2rem;">
+            ${document.getElementById('statementText').value}
+          </h3>
+        </div>
+      </div>
     `;
     document.getElementById('preview').innerHTML = previewHtml;
     AOS.init({ duration: 1200, offset: 50 });
@@ -352,7 +359,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Text on Image</title>
+  <title>UQ Purple heading + Image + Statement D</title>
   <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"><\/script>
 </head>  
@@ -374,7 +381,7 @@ AOS.init({
   }
   
   // Attach event listeners to update preview when inputs change
-  ['moduleTitle', 'lessonTitle', 'imageUrl', 'heroSubheading'].forEach(id => {
+  ['moduleTitle', 'lessonTitle', 'imageUrl', 'heroSubheading', 'statementText'].forEach(id => {
     document.getElementById(id).addEventListener('input', updatePreview);
   });
   updatePreview();
