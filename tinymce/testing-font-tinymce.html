@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test TinyMCE Fonts</title>
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <!-- Use the official TinyMCE CDN build -->
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <style>
+    body { padding: 20px; }
+  </style>
+</head>
+<body>
+  <textarea id="statementText">Test text.</textarea>
+  <script>
+    tinymce.init({
+      selector: '#statementText',
+      font_formats: 'Open Sans=Open Sans, sans-serif; Merriweather=Merriweather, serif; Arial=Arial, Helvetica, sans-serif; Roboto=Roboto, sans-serif; Montserrat=Montserrat, sans-serif; Atkinson Hyperlegible=Atkinson Hyperlegible, sans-serif;',
+      content_css: [
+        'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap'
+      ],
+      toolbar: 'undo redo | fontfamily fontsize | bold italic underline',
+      content_style: 'body { font-family: "Open Sans", sans-serif; }'
+    });
+  </script>
+</body>
+</html>
