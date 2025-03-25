@@ -92,6 +92,10 @@
       width: 100%;
       margin: 10px 0;
     }
+	  .bg-white-borderless{
+		  /* do not copy this out to master CSS file - apply to this page only */
+		  border: 1px dashed #D7D1CC;
+	  }  
   </style>
 	
 </head>
@@ -103,7 +107,6 @@
 
       <!-- Input Fields -->
       <label>Statement Text</label>
-      <p>For <strong class="uqbs-font-weight-heavy">bold text</strong>, use either <code>&lt;b&gt;bold&lt;/b&gt;</code> or <code>&lt;strong&gt;your text here&lt;/strong&gt;</code>.<br>You can insert a line-break by typing in <code>&lt;br&gt;</code>.</p>
       <textarea id="statementText" placeholder="Enter text here">This is your text in preview.</textarea>
     
       <label>Change color</label>
@@ -112,6 +115,7 @@
       <div class="color-row">
         <button id="bg-black" class="bg-black">Black</button>
         <button id="bg-white" class="bg-white">White</button>
+		<button id="bg-white-borderless" class="bg-white-borderless">White (borderless)</button>  
         <button id="bg-purple" class="bg-purple">Purple</button>
       </div>
       <!-- Row 2 --> 
@@ -175,7 +179,7 @@
     }
     .uqbs-font-weight-heavy{
       font-weight: bolder;
-    }
+    }  
   </style>	
   
   <!-- Inline Preview & Clipboard Script -->
@@ -207,35 +211,52 @@
   		content_style: 'body { font-family: "Open Sans", sans-serif; font-size: 0.875rem; }p { margin: 0; }',
 		block_formats: 'Title=h4;Heading=h5;Subheading=h6;Paragraph=p',
 		color_map: [
-			'#51247A', 'UQ Purple',    		// --uq-purple
-			'#000000', 'UQ Black',     		// --uq-black
-			'#FFFFFF', 'UQ White',     		// --uq-white
-			'#2EA836', 'UQ Green',     		// --uq-green
-			'#E62645', 'UQ Red',       		// --uq-red
-			'#962A8B', 'UQ Light Purple', 	// --uq-light-purple
-			'#1F0029', 'UQ Dark Purple',  	// --uq-dark-purple
-			'#BB9D65', 'UQ Gold',      		// --uq-gold
-			'#FBB800', 'UQ Yellow',    		// --uq-yellow
-			'#EB602B', 'UQ Orange',    		// --uq-orange
-			'#4085C6', 'UQ Blue',      		// --uq-blue
-			'#00A2C7', 'UQ Aqua',       		// --uq-aqua
-			'#262626', 'Blackboard Default', // --bb-default --bb-default: rgb(38, 38, 38);
-    		'#2075A3', 'Blackboard Link',	// --bb-link: #2075A3;
-			'#666666', 'Blackboard Grey',
-			'#A234B5', 'Blackboard Purple',
-			'#046EF6', 'Blackboard Blue',
-			'#1C8845', 'Blackboard Green',
-			'#E72218', 'Blackboard Red',
-		  ],
-  		color_cols: 4,
+			  // UQ Branded Colours
+			  '#51247A', 'UQ Purple, #51247A',      // --uq-purple
+			  '#000000', 'UQ Black, #000000',       // --uq-black
+			  '#FFFFFF', 'UQ White, #FFFFFF',       // --uq-white
+			  '#2EA836', 'UQ Green, #2EA836',       // --uq-green
+			  '#E62645', 'UQ Red, #E62645',         // --uq-red
+			  '#962A8B', 'UQ Light Purple, #962A8B',// --uq-light-purple
+			  '#1F0029', 'UQ Dark Purple, #1F0029', // --uq-dark-purple
+			  '#BB9D65', 'UQ Gold, #BB9D65',        // --uq-gold
+			  '#FBB800', 'UQ Yellow, #FBB800',      // --uq-yellow
+			  '#EB602B', 'UQ Orange, #EB602B',      // --uq-orange
+			  '#4085C6', 'UQ Blue, #4085C6',        // --uq-blue
+			  '#00A2C7', 'UQ Aqua, #00A2C7',        // --uq-aqua
+
+			  // UQ Neutral Palette
+			  '#D7D1CC', 'UQ Neutral, #D7D1CC',     // --uq-neutral
+			  '#F7F6F5', 'UQ Neutral20, #F7F6F5',   // --uq-neutral20
+			  '#EFECEA', 'UQ Neutral40, #EFECEA',   // --uq-neutral40
+			  '#E7E3E0', 'UQ Neutral60, #E7E3E0',   // --uq-neutral60
+			  '#DFDAD6', 'UQ Neutral80, #DFDAD6',   // --uq-neutral80
+
+			  '#999490', 'UQ Dark Grey, #999490',   // --uq-dark-grey
+			  '#EBE8E7', 'UQ Dark Grey20, #EBE8E7', // --uq-dark-grey20
+			  '#D8D2D0', 'UQ Dark Grey40, #D8D2D0', // --uq-dark-grey40
+			  '#C4BDBA', 'UQ Dark Grey60, #C4BDBA', // --uq-dark-grey60
+			  '#B1A8A4', 'UQ Dark Grey80, #B1A8A4', // --uq-dark-grey80
+			  
+			  // Blackboard Colours
+			  '#262626', 'Blackboard Default, #262626', // --bb-default
+			  '#2075A3', 'Blackboard Link, #2075A3',    // --bb-link
+			  '#666666', 'Blackboard Grey, #666666',	
+			  '#A234B5', 'Blackboard Purple, #A234B5',
+			  '#046EF6', 'Blackboard Blue, #046EF6',
+			  '#1C8845', 'Blackboard Green, #1C8845',
+			  '#E72218', 'Blackboard Red, #E72218',
+			  '#F8F8F8', 'Blackboard Table Heading, #F8F8F8',
+			],
+  		color_cols: 6,
 	  plugins: [
       // Core editing features
-      'anchor', 'accordion', 'autolink', 'autoresize', 'charmap', 'code', 'codesample', 'codesample code', 'help', 'emoticons', 'fullscreen', 'image', 'importcss', 'link', 'lists', 'advlist', 'media', 'pagebreak', 'preview', 'quickbars', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+      'anchor', 'accordion', 'autolink', 'autoresize', 'charmap', 'code', 'codesample', 'codesample code', 'help', 'emoticons', 'fullscreen', 'image', 'importcss', 'link', 'lists', 'advlist', 'media', 'pagebreak', 'preview', 'quickbars', 'save', 'searchreplace', 'table', 'visualblocks', 'wordcount',
       // Your account includes a free trial of TinyMCE premium features
       // Try the most popular premium features until Jan 20, 2025:
      // 'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf' //
     ],
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough backcolor forecolor |  codesample code importcss preview visualblocks | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen | help',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough backcolor forecolor |  codesample code importcss visualblocks save | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen | help',
 	  advlist_bullet_styles: 'default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman',
 	  quickbars_selection_toolbar: 'bold italic | blocks | quicklink forecolor blockquote',
 	  visualblocks_default_state: false,
