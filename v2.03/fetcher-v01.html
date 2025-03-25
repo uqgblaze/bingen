@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Assessment Section Generator</title>
+  <!-- External CSS required for styling -->
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <link rel="stylesheet" media="all" href="https://course-profiles.uq.edu.au/styleguide/css/base.css?sqvff3" />
+  <link rel="stylesheet" media="all" href="https://course-profiles.uq.edu.au/sites/default/files/css/css_Fiag1Bs3luJL-hjsMyRn0RTqiQd8SYlaM2sIRysXfZI.css?delta=6&amp;language=en&amp;theme=uq_standard_theme&amp;include=eJxtjlEOgCAMQy-k8UhkgwVJBgiFD29vkA8T9avJa7cWJ5rEjQmy9GLQKDmqzrRdomxeM5MOwwmCTwYz_vDXQSPGD7ZZlQ4E1rvF5l4x6BAT0khb-dZwFXK29sg_P3OSXta55AKMOU6h" />
+  <style>
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+    }
+    .uqgenerator-container {
+      max-width: 1200px;
+      margin: 1rem auto;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      border: 1px solid #CDCDCD;
+    }
+    .uqbs-divider-dotted{
+      display: block;
+      height: 8px;
+      width: 100%;
+      margin: 20px 0;
+      border-bottom: 1px dashed #CDCDCD;
+    }
+    .generator-container {
+      margin: 20px auto;
+      text-align: center;
+      font-family: sans-serif;
+      max-width: 600px;
+    }
+    .generator-container input {
+      padding: 8px;
+      margin: 8px;
+      width: 300px;
+      font-size: 16px;
+    }
+    .generator-container button {
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    .preview-container {
+      border: 1px dotted #9628ab;
+      margin: 20px auto;
+      width: 80%;
+      background-color: #FFF;
+    }
+    .preview-container iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+<div class="uqgenerator-container">
+  <h2>Assessment Section Generator</h2>
+  <div class="generator-container">
+    <p>Enter the extended course code (e.g., BISM7808-22456-7520)</p>
+    <input type="text" id="courseCode" placeholder="BISM7808-22456-7520">
+    <button id="fetchBtn">Fetch Assessment Section</button>
+  </div>
+  <div class="uqbs-divider-dotted"></div>
+  <div class="stand-out-container">
+    <p class="text-center"><strong>Preview:</strong></p>
+    <div class="preview-container">
+      <iframe id="previewFrame"></iframe>
+    </div>
+  </div>
+  <div class="uqbs-divider-dotted"></div>
+  <button class="uq-button uq-button--large uq-button--expand" onclick="copySnippet()" style="display: block; margin: 0 auto;"><span class="uq-icon uq-icon--standard--common-file-double"></span>Copy Generated HTML to Clipboard</button>
+  <div class="uqbs-divider-dotted"></div>
+  <h3>Generated HTML Snippet</h3>
+  <pre id="generatedSnippet"></pre>
+</div>
+
+<script>
+// Function to update relative links within the extracted section
+function updateLinks(section, courseCode) {
+  // Base URL for the course profile page
+  const baseUrl = `https://course-profiles.uq.edu.au/course-profiles/${courseCode}`;
+  const anchors = section.querySelectorAll('a');
+  anchors.forEach(a => {
+    const href = a.getAttribute('href');
+    // Update only if the href starts with '#' (a relative anchor)
+    if (href && href.startsWith('#')) {
+      a.setAttribute('href', baseUrl + href);
+      a.setAttribute('target', '_blank'); // ensures link opens in a new tab
+    }
+  });
+}
+
+// Function to generate the complete HTML snippet for output
+function generateSnippet(sectionHTML) {
+  return `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <link rel="stylesheet" media="all" href="https://course-profiles.uq.edu.au/styleguide/css/base.css?sqvff3" />
+  <link rel="stylesheet" media="all" href="https://course-profiles.uq.edu.au/sites/default/files/css/css_Fiag1Bs3luJL-hjsMyRn0RTqiQd8SYlaM2sIRysXfZI.css?delta=6&amp;language=en&amp;theme=uq_standard_theme&amp;include=eJxtjlEOgCAMQy-k8UhkgwVJBgiFD29vkA8T9avJa7cWJ5rEjQmy9GLQKDmqzrRdomxeM5MOwwmCTwYz_vDXQSPGD7ZZlQ4E1rvF5l4x6BAT0khb-dZwFXK29sg_P3OSXta55AKMOU6h" />
+</head>
+<body>
+${sectionHTML}
+</body>
+</html>`;
+}
+
+// Event listener for the fetch button
+document.getElementById('fetchBtn').addEventListener('click', () => {
+  const courseCode = document.getElementById('courseCode').value.trim();
+  if (!courseCode) {
+    alert('Please enter a course code.');
+    return;
+  }
+  
+  // Build the URL for the course profile page
+  const url = `https://course-profiles.uq.edu.au/course-profiles/${courseCode}`;
+  // Use All Origins CORS proxy - note: if needed, check https://allorigins.hexocode.repl.co/ for any usage guidelines.
+  const proxyUrl = `https://api.allorigins.hexocode.repl.co/get?disableCache=true&url=${encodeURIComponent(url)}`;
+  
+  fetch(proxyUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok.');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const htmlText = data.contents;
+      // Parse the fetched HTML to a document object
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlText, 'text/html');
+      // Extract the assessment section using its id
+      const assessmentSection = doc.getElementById('assessment--section');
+      if (!assessmentSection) {
+        throw new Error('Assessment section not found on the page.');
+      }
+      
+      // Clone the section so the original remains unmodified
+      const sectionClone = assessmentSection.cloneNode(true);
+      // Update relative links within the section to be fully qualified and open in a new tab
+      updateLinks(sectionClone, courseCode);
+      
+      // Get the outer HTML of the updated section
+      const sectionHTML = sectionClone.outerHTML;
+      // Build the full HTML snippet including the necessary CSS links
+      const fullSnippet = generateSnippet(sectionHTML);
+      
+      // Update the preview iframe using the srcdoc attribute
+      document.getElementById('previewFrame').srcdoc = fullSnippet;
+      // Display the generated snippet in the pre element for copy/pasting
+      document.getElementById('generatedSnippet').textContent = fullSnippet;
+    })
+    .catch(error => {
+      alert('Error fetching or processing course profile: ' + error.message);
+    });
+});
+
+// Function to copy the generated snippet to clipboard
+function copySnippet() {
+  const snippet = document.getElementById('generatedSnippet').textContent;
+  if (!snippet) {
+    alert('No snippet to copy. Please fetch a course profile first.');
+    return;
+  }
+  navigator.clipboard.writeText(snippet).then(() => {
+    alert('HTML snippet copied to clipboard!');
+  }).catch(err => {
+    alert('Error copying snippet: ' + err);
+  });
+}
+</script>
+</body>
+</html>
