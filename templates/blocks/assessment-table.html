@@ -68,17 +68,27 @@
 	
   
   <h3>Iframe Preview (Step 1)</h3>
-	<p class="uqbs-bsan-subheading">If you get an error, that means the proxy isn't working correctly. This means that is an error with the API script that is removing the CORS protection from the course profile.</p><br>
+	<p class="uqbs-bsan-subheading">This step is to cleanse the site and remove any CORS (Cross-Origin Resource Sharing) restrictions from the UQ Course Profile site. If the stripped down HTML loads - great! We can move on to the next step.</p><br>
+	<p class="uqbs-bsan-subheading">If you get an error, it could mean a few different things:
+	<ul>
+	<li>It could be that the third-party proxy server is overloaded and isn't taking requests at the moment. <strong>Try again later</strong>.</li>
+	<li>It could mean that the third-party proxy server isn't operational at the moment. <strong>Try again later.</strong></li>
+	</ul></p><br>
   <iframe id="previewFrame" src=""></iframe>
   
-  <h3>Raw HTML Output (Step 2)</h3> 
+  <h3>Raw HTML Output (Step 2)</h3>
+	<p class="uqbs-bsan-subheading">Once the preview is showing the course profile in plain text, we can then try and extract the HTML from that page.</p><br>
+	<p class="uqbs-bsan-subheading">This <i>usually</i> works without an issue, but sometimes you'll get an error. <strong>Try again if you get an error</strong>.</p><br>
 	<button id="fetchHtmlBtn" class="uq-button uq-button--large uq-button--expand"><span class="uq-icon uq-icon--business-and-economics--data-file-bars-edit"></span>Step 2: Fetch HTML</button>
   <pre id="rawHTMLOutput">Step 2: Raw HTML will appear here after fetching.</pre>
   
   <h3>Generated HTML Snippet (Step 3)</h3>
+	<p class="uqbs-bsan-subheading">Once the script has read the HTML, it can then reproduce only the most important information from the assessment table and combine it with some special sauce to make it all work inside of Blackboard Ultra. I'll apply a slightly modified stylesheet and change out the links so that they will point directly back to the Course Profile.</p><br><br>
 	<button id="extractBtn" class="uq-button uq-button--large uq-button--expand"><span class="uq-icon uq-icon--architecture-and-planning--measure-ruler-divider"></span>Step 3: Extract &amp; Generate Snippet</button>
   <pre id="generatedSnippet">Generated snippet will appear here after extraction.</pre>
   
+  <h3>Copy to Clipboard &amp; Paste as HTML (Step 4)</h3>
+	<p class="uqbs-bsan-subheading">Click on the button below to copy the code to your clipboard, then go into Blackboard Ultra and create a new HTML Block and paste in your code.</p><br>
   <button id="copyBtn" class="uq-button uq-button--large uq-button--expand"><span class="uq-icon uq-icon--standard--common-file-double"></span>Step 4: Copy Assessment HTML to Clipboard</button>
 </div>
 
@@ -171,7 +181,7 @@ document.getElementById('extractBtn').addEventListener('click', () => {
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
   <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/assessment-table-base.css" />
-  <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/assessment-table-base.css" />
+  <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/assessment-table-icons.css" />
 </head>
 <body>
 ${sectionHTML}
