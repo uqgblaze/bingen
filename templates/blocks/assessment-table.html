@@ -181,7 +181,11 @@ document.getElementById('extractBtn').addEventListener('click', () => {
   updateLinks(sectionClone, courseCode);
   const sectionHTML = sectionClone.outerHTML;
   
+  // Compute the short code: take the first 8 characters and convert to lowercase
+  const shortCode = courseCode.trim().substring(0, 8).toLowerCase();
+  
   // Wrap the extracted section in a full HTML snippet with your CSS links
+  // The Course Profile link uses the computed shortCode in place of the placeholder
   const fullSnippet = `<!doctype html>
 <html>
 <head>
@@ -191,7 +195,21 @@ document.getElementById('extractBtn').addEventListener('click', () => {
   <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/assessment-table-icons.css" />
 </head>
 <body>
+<div class="uq-container">
 ${sectionHTML}
+<p style="font-size: 0.8rem; text-align: center;"><i>Note</i>. This table is a snapshot from the course profile and does not automatically update. <br> Although changes are rare, please view the official course profile page for any modifications to your course.</p>
+</div>
+<div class="uq-container">
+    <a class="uq-button uq-button--large uq-button--expand"
+       href="https://programs-courses.uq.edu.au/course.html?course_code=${shortCode}" target="_blank">
+      <span class="uq-icon uq-icon--how-youll-learn--seo-search-page"></span>
+      View Course Profile
+    </a>
+    <p class="text-center" style="margin-top: 8px;">
+      Note: If the button above is not working, try using the following link:
+      <a class="bb-link-hover" href="https://programs-courses.uq.edu.au/course.html?course_code=${shortCode}" target="_blank" style="color: #2075A3;">https://programs-courses.uq.edu.au/course.html?course_code=${shortCode}</a>
+    </p>
+  </div>
 </body>
 </html>`;
   
