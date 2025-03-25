@@ -15,13 +15,13 @@
       max-width: 1200px;
       margin: 1rem auto;
       padding: 0px 15px 15px;
-	  padding-top: 0;	
+      padding-top: 0;	
       background-color: white;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       border: 1px solid #CDCDCD;
     }
-     .generator-container {
+    .generator-container {
       text-align: center;
       margin-bottom: 20px;
     } 
@@ -31,7 +31,6 @@
       width: 300px;
       font-size: 16px;
     }
-
     iframe {
       width: 100%;
       height: 400px;
@@ -50,66 +49,94 @@
 <body>
 <div class="container">
   <h2>Assessment Table Extractor</h2>
-	<p><strong>Please read this page carefully as you first need to find your extended course code to be able to extract your table!</strong></p>
-	<p>Your <strong><em>extended course code</em></strong> can be found on your course profile page, located within the navigation bar under the large purple banner. See the image below for guidance:</p>
-	<p><img src="https://uqgblaze.github.io/bingen/thumbs/template-assessment-table-help.png" alt="The extended course code is located in the crumb trail just under the large purple banner"></p>
-	<p>You'll need to <strong>copy this extended course code</strong> and <strong>paste it into the entry below.</strong></p>
+  <p><strong>Please read this page carefully as you first need to find your extended course code to be able to extract your table!</strong></p>
+  <p>Your <strong><em>extended course code</em></strong> can be found on your course profile page, located within the navigation bar under the large purple banner. See the image below for guidance:</p>
+  <p><img src="https://uqgblaze.github.io/bingen/thumbs/template-assessment-table-help.png" alt="The extended course code is located in the crumb trail just under the large purple banner"></p>
+  <p>You'll need to <strong>copy this extended course code</strong> and <strong>paste it into the entry below.</strong></p>
+  
   <div class="generator-container">
-    <p>Enter the extended course code (e.g., MGTS1301-20318-7520)</p>
-	  <input type="text" id="courseCode" placeholder="MGTS1301-20318-7520">
+    <p>Enter the extended course code or URL (e.g., <br>
+       <code>MGTS1301-20318-7520</code> or <br>
+       <code>https://course-profiles.uq.edu.au/course-profiles/BISM7808-22456-7520#assessment</code>)</p>
+    <input type="text" id="courseCode" placeholder="MGTS1301-20318-7520">
     <br>
     <!-- Step 1: Load in Iframe to confirm the proxy is working -->
-    <button id="loadIframeBtn" class="uq-button uq-button--large uq-button--expand"><span class="uq-icon uq-icon--other--earth-3"></span>Step 1: Load in Iframe</button>
-    <!-- Step 2: Fetch the raw HTML via AllOrigins raw endpoint --
-    <button id="fetchHtmlBtn">Fetch HTML</button>
-    <!-- Step 3: Extract the assessment section and generate snippet --
-    <button id="extractBtn">Extract &amp; Generate Snippet</button> -->
+    <button id="loadIframeBtn" class="uq-button uq-button--large uq-button--expand">
+      <span class="uq-icon uq-icon--other--earth-3"></span>Step 1: Load in Iframe
+    </button>
+    <!-- Step 2 and Step 3 remain the same as before -->
   </div>
-	
   
   <h3>Iframe Preview (Step 1)</h3>
-	<p class="uqbs-bsan-subheading">This step is to cleanse the site and remove any CORS (Cross-Origin Resource Sharing) restrictions from the UQ Course Profile site. If the stripped down HTML loads - great! We can move on to the next step.</p><br>
-	<p class="uqbs-bsan-subheading">If you get an error, it could mean a few different things:
-	<ul>
-	<li>It could be that the third-party proxy server is overloaded and isn't taking requests at the moment. <strong>Try again later</strong>.</li>
-	<li>It could mean that the third-party proxy server isn't operational at the moment. <strong>Try again later.</strong></li>
-	</ul></p><br>
+  <p class="uqbs-bsan-subheading">This step is to cleanse the site and remove any CORS (Cross-Origin Resource Sharing) restrictions from the UQ Course Profile site. If the stripped down HTML loads - great! We can move on to the next step.</p><br>
+  <p class="uqbs-bsan-subheading">If you get an error, it could mean a few different things:
+  <ul>
+    <li>It could be that the third-party proxy server is overloaded and isn't taking requests at the moment. <strong>Try again later</strong>.</li>
+    <li>It could mean that the third-party proxy server isn't operational at the moment. <strong>Try again later.</strong></li>
+  </ul></p><br>
   <iframe id="previewFrame" src=""></iframe>
   
   <h3>Raw HTML Output (Step 2)</h3>
-	<p class="uqbs-bsan-subheading">Once the preview is showing the course profile in plain text, we can then try and extract the HTML from that page.</p><br>
-	<p class="uqbs-bsan-subheading">This <i>usually</i> works without an issue, but sometimes you'll get an error. <strong>Try again if you get an error</strong>.</p><br>
-	<button id="fetchHtmlBtn" class="uq-button uq-button--large uq-button--expand"><span class="uq-icon uq-icon--business-and-economics--data-file-bars-edit"></span>Step 2: Fetch HTML</button>
+  <p class="uqbs-bsan-subheading">Once the preview is showing the course profile in plain text, we can then try and extract the HTML from that page.</p><br>
+  <p class="uqbs-bsan-subheading">This <i>usually</i> works without an issue, but sometimes you'll get an error. <strong>Try again if you get an error</strong>.</p><br>
+  <button id="fetchHtmlBtn" class="uq-button uq-button--large uq-button--expand">
+    <span class="uq-icon uq-icon--business-and-economics--data-file-bars-edit"></span>Step 2: Fetch HTML
+  </button>
   <pre id="rawHTMLOutput">Step 2: Raw HTML will appear here after fetching.</pre>
   
   <h3>Generated HTML Snippet (Step 3)</h3>
-	<p class="uqbs-bsan-subheading">Once the script has read the HTML, it can then reproduce only the most important information from the assessment table and combine it with some special sauce to make it all work inside of Blackboard Ultra. I'll apply a slightly modified stylesheet and change out the links so that they will point directly back to the Course Profile.</p><br><br>
-	<button id="extractBtn" class="uq-button uq-button--large uq-button--expand"><span class="uq-icon uq-icon--architecture-and-planning--measure-ruler-divider"></span>Step 3: Extract &amp; Generate Snippet</button>
+  <p class="uqbs-bsan-subheading">Once the script has read the HTML, it can then reproduce only the most important information from the assessment table and combine it with some special sauce to make it all work inside of Blackboard Ultra. I'll apply a slightly modified stylesheet and change out the links so that they will point directly back to the Course Profile.</p><br><br>
+  <button id="extractBtn" class="uq-button uq-button--large uq-button--expand">
+    <span class="uq-icon uq-icon--architecture-and-planning--measure-ruler-divider"></span>Step 3: Extract &amp; Generate Snippet
+  </button>
   <pre id="generatedSnippet">Generated snippet will appear here after extraction.</pre>
   
   <h3>Copy to Clipboard &amp; Paste as HTML (Step 4)</h3>
-	<p class="uqbs-bsan-subheading">Click on the button below to copy the code to your clipboard, then go into Blackboard Ultra and create a new HTML Block and paste in your code.</p><br>
-  <button id="copyBtn" class="uq-button uq-button--large uq-button--expand"><span class="uq-icon uq-icon--standard--common-file-double"></span>Step 4: Copy Assessment HTML to Clipboard</button>
+  <p class="uqbs-bsan-subheading">Click on the button below to copy the code to your clipboard, then go into Blackboard Ultra and create a new HTML Block and paste in your code.</p><br>
+  <button id="copyBtn" class="uq-button uq-button--large uq-button--expand">
+    <span class="uq-icon uq-icon--standard--common-file-double"></span>Step 4: Copy Assessment HTML to Clipboard
+  </button>
 </div>
 
 <script>
 // Global variable to store fetched raw HTML
 let fetchedHTML = "";
 
-// Helper: Construct course profile URL (without any fragment)
-function getCourseProfileUrl(courseCode) {
-  courseCode = courseCode.trim();
+// New helper: Extract the extended course code from various input formats
+function extractCourseCode(input) {
+  input = input.trim();
+  // If the input starts with http/https, treat it as a URL
+  if (input.startsWith("http://") || input.startsWith("https://")) {
+    try {
+      const urlObj = new URL(input);
+      let pathname = urlObj.pathname; // e.g., /course-profiles/BISM7808-22456-7520
+      const parts = pathname.split("/");
+      // Get the last non-empty segment (handles trailing slashes)
+      let code = parts.filter(part => part !== "")[parts.filter(part => part !== "").length - 1];
+      return code;
+    } catch (e) {
+      return input; // If URL parsing fails, return the original input
+    }
+  } else {
+    // Otherwise, assume it's already the extended course code
+    return input;
+  }
+}
+
+// Updated helper: Construct course profile URL (without any fragment) based on the extended course code
+function getCourseProfileUrl(input) {
+  const courseCode = extractCourseCode(input);
   return `https://course-profiles.uq.edu.au/course-profiles/${courseCode}`;
 }
 
 // Step 1: Load in Iframe using AllOrigins raw endpoint
 document.getElementById('loadIframeBtn').addEventListener('click', () => {
-  const courseCode = document.getElementById('courseCode').value;
-  if (!courseCode) {
-    alert('Please enter a course code.');
+  const userInput = document.getElementById('courseCode').value;
+  if (!userInput) {
+    alert('Please enter a course code or URL.');
     return;
   }
-  const url = getCourseProfileUrl(courseCode);
+  const url = getCourseProfileUrl(userInput);
   // Use AllOrigins raw endpoint to load the page in the iframe
   const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
   document.getElementById('previewFrame').src = proxyUrl;
@@ -117,12 +144,12 @@ document.getElementById('loadIframeBtn').addEventListener('click', () => {
 
 // Step 2: Fetch the raw HTML via AllOrigins raw endpoint
 document.getElementById('fetchHtmlBtn').addEventListener('click', () => {
-  const courseCode = document.getElementById('courseCode').value;
-  if (!courseCode) {
-    alert('Please enter a course code.');
+  const userInput = document.getElementById('courseCode').value;
+  if (!userInput) {
+    alert('Please enter a course code or URL.');
     return;
   }
-  const url = getCourseProfileUrl(courseCode);
+  const url = getCourseProfileUrl(userInput);
   const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
   
   fetch(proxyUrl)
@@ -143,8 +170,8 @@ document.getElementById('fetchHtmlBtn').addEventListener('click', () => {
 });
 
 // Helper: Update relative links in the extracted section
-function updateLinks(section, courseCode) {
-  const baseUrl = getCourseProfileUrl(courseCode);
+function updateLinks(section, userInput) {
+  const baseUrl = getCourseProfileUrl(userInput);
   const anchors = section.querySelectorAll('a');
   anchors.forEach(a => {
     const href = a.getAttribute('href');
@@ -155,13 +182,15 @@ function updateLinks(section, courseCode) {
   });
 }
 
+
 // Step 3: Extract the assessment section and generate snippet
 document.getElementById('extractBtn').addEventListener('click', () => {
   if (!fetchedHTML) {
     alert('No raw HTML available. Please fetch the HTML first.');
     return;
   }
-  const courseCode = document.getElementById('courseCode').value;
+  const userInput = document.getElementById('courseCode').value;
+  const extendedCode = extractCourseCode(userInput);
   const parser = new DOMParser();
   const doc = parser.parseFromString(fetchedHTML, 'text/html');
   const assessmentSection = doc.getElementById('assessment--section');
@@ -178,11 +207,11 @@ document.getElementById('extractBtn').addEventListener('click', () => {
   headings.forEach(heading => heading.remove());
   
   // Update relative links within the section to be fully qualified and open in a new tab
-  updateLinks(sectionClone, courseCode);
+  updateLinks(sectionClone, userInput);
   const sectionHTML = sectionClone.outerHTML;
   
-  // Compute the short code: take the first 8 characters and convert to lowercase
-  const shortCode = courseCode.trim().substring(0, 8).toLowerCase();
+  // Compute the short code: take the first 8 characters of the extended code and convert to lowercase
+  const shortCode = extendedCode.substring(0, 8).toLowerCase();
   
   // Wrap the extracted section in a full HTML snippet with your CSS links
   // The Course Profile link uses the computed shortCode in place of the placeholder
@@ -216,8 +245,7 @@ ${sectionHTML}
   document.getElementById('generatedSnippet').textContent = fullSnippet;
   alert('Assessment section extracted successfully.');
 });
-
-
+  
 // Copy generated snippet to clipboard
 document.getElementById('copyBtn').addEventListener('click', () => {
   const snippet = document.getElementById('generatedSnippet').textContent;
