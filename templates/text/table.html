@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Rich-Text Editor</title>
+  <title>Rich Table Editor</title>
   <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,6 +92,9 @@
       width: 100%;
       margin: 10px 0;
     }
+	  .color-row button{
+		  border-radius: 4px!important;
+	  }  
 	  .bg-white-borderless{
 		  /* do not copy this out to master CSS file - apply to this page only */
 		  border: 1px dashed #D7D1CC;
@@ -111,7 +114,7 @@
 		<table style="border-collapse: collapse; width: 100%; border-width: 1px;" border="1">
 		  <colgroup>
 			<col style="width: 25%;" />
-			<col style="width: 25;" />
+			<col style="width: 25%;" />
 			<col style="width: 25%;" />
 			<col style="width: 25%;" />
 		  </colgroup>
@@ -233,14 +236,13 @@
   <!-- Inline Preview & Clipboard Script -->
   <script>
     // Global variable to store the current background (and extra) classes.
-    let currentBgClasses = "bg-white";
+    let currentBgClasses = "bg-white-borderless";
 
     // Function to update the preview using content from TinyMCE (if available)
     function updatePreview() {
       const content = tinymce.get('statementText') ? tinymce.get('statementText').getContent() : document.getElementById('statementText').value;
       const previewHtml = `
-        <div class="uqbs-tinymce uqbs-rounded-border--all ${currentBgClasses}" data-aos="fade" data-aos-delay="0">
-          <div class="uq-container">
+        <div class="uqbs-tinymce uqbs-rounded-border--all ${currentBgClasses} uqbs-nopadding" data-aos="fade" data-aos-delay="0">
               ${content}
           </div>	
         </div>
