@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Assessment Section Generator - Multi-Step</title>
+  <!-- External CSS required for styling -->
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <link rel="stylesheet" media="all" href="https://course-profiles.uq.edu.au/styleguide/css/base.css?sqvff3" />
+  <link rel="stylesheet" media="all" href="https://course-profiles.uq.edu.au/sites/default/files/css/css_Fiag1Bs3luJL-hjsMyRn0RTqiQd8SYlaM2sIRysXfZI.css?delta=6&amp;language=en&amp;theme=uq_standard_theme&amp;include=eJxtjlEOgCAMQy-k8UhkgwVJBgiFD29vkA8T9avJa7cWJ5rEjQmy9GLQKDmqzrRdomxeM5MOwwmCTwYz_vDXQSPGD7ZZlQ4E1rvF5l4x6BAT0khb-dZwFXK29sg_P3OSXta55AKMOU6h" />
+  <style>
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 1rem auto;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      border: 1px solid #CDCDCD;
+    }
+    .generator-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .generator-container input {
+      padding: 8px;
+      margin: 8px;
+      width: 300px;
+      font-size: 16px;
+    }
+    .generator-container button {
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    iframe {
+      width: 100%;
+      height: 400px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      max-height: 300px;
+      overflow: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Assessment Section Generator - Multi-Step</h2>
+  <div class="generator-container">
+    <p>Enter the extended course code (e.g., BISM7808-22456-7520)</p>
+    <input type="text" id="courseCode" placeholder="BISM7808-22456-7520">
+    <br>
+    <!-- Step 1: Load the page in an iframe to confirm proxy is working -->
+    <button id="loadIframeBtn">Load in Iframe</button>
+    <!-- Step 2: Fetch the raw HTML via the proxy -->
+    <button id="fetchHtmlBtn">Fetch HTML</button>
+    <!-- Step 3: Extract the assessment section and generate snippet -->
+    <button id="extractBtn">Extract &amp; Generate Snippet</button>
+  </div>
+  
+  <h3>Iframe Preview (Step 1)</h3>
+  <iframe id="previewFrame" src=""></iframe>
+  
+  <h3>Raw HTML Output (Step 2)</h3>
+  <pre id="rawHTMLOutput">Raw HTML will appear here after fetching.</pre>
+  
+  <h3>Generated HTML Snippet (Step 3)</h3>
+  <pre id="generatedSnippet">Generated snippet will appear here after extraction.</pre>
+  
+  <button id="copyBtn">Copy Generated HTML to Clipboard</button>
+</div>
+
+<script>
+// Global variable to store fetched raw HTML
+let fetchedHTML = "";
+
+// Helper function: constructs the course profile URL (without any fragment)
+function getCourseProfileUrl(courseCode) {
+  courseCode = courseCode.trim();
+  return `https://course-profiles.uq.edu.au/course-profiles/${courseCode}`;
+}
+
+// Step 1: Load in Iframe to confirm proxy works
+document.getElementById('loadIframeBtn').addEventListener('click', () => {
+  const courseCode = document.getElementById('courseCode').value;
+  if (!courseCode) {
+    alert('Please enter a course code.');
+    return;
+  }
+  // Construct URL (without any fragment)
+  const url = getCourseProfileUrl(courseCode);
+  // Use Thingproxy to load the page
+  const proxyUrl = `https://thingproxy.freeboard.io/fetch/${url}`;
+  document.getElementById('previewFrame').src = proxyUrl;
+});
+
+// Step 2: Fetch the raw HTML via proxy
+document.getElementById('fetchHtmlBtn').addEventListener('click', () => {
+  const courseCode = document.getElementById('courseCode').value;
+  if (!courseCode) {
+    alert('Please enter a course code.');
+    return;
+  }
+  const url = getCourseProfileUrl(courseCode);
+  const proxyUrl = `https://thingproxy.freeboard.io/fetch/${url}`;
+  
+  fetch(proxyUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok.');
+      }
+      return response.text();
+    })
+    .then(htmlText => {
+      fetchedHTML = htmlText;
+      document.getElementById('rawHTMLOutput').textContent = htmlText;
+      alert('Raw HTML fetched successfully.');
+    })
+    .catch(error => {
+      alert('Error fetching raw HTML: ' + error.message);
+    });
+});
+
+// Helper function: Update relative links in the extracted section
+function updateLinks(section, courseCode) {
+  const baseUrl = getCourseProfileUrl(courseCode);
+  const anchors = section.querySelectorAll('a');
+  anchors.forEach(a => {
+    const href = a.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      a.setAttribute('href', baseUrl + href);
+      a.setAttribute('target', '_blank');
+    }
+  });
+}
+
+// Step 3: Extract the assessment section and generate snippet
+document.getElementById('extractBtn').addEventListener('click', () => {
+  if (!fetchedHTML) {
+    alert('No raw HTML available. Please fetch the HTML first.');
+    return;
+  }
+  const courseCode = document.getElementById('courseCode').value;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(fetchedHTML, 'text/html');
+  const assessmentSection = doc.getElementById('assessment--section');
+  if (!assessmentSection) {
+    alert('Assessment section not found in the fetched HTML.');
+    return;
+  }
+  
+  // Clone and update links
+  const sectionClone = assessmentSection.cloneNode(true);
+  updateLinks(sectionClone, courseCode);
+  const sectionHTML = sectionClone.outerHTML;
+  
+  // Wrap in full HTML snippet with necessary CSS links
+  const fullSnippet = `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <link rel="stylesheet" media="all" href="https://course-profiles.uq.edu.au/styleguide/css/base.css?sqvff3" />
+  <link rel="stylesheet" media="all" href="https://course-profiles.uq.edu.au/sites/default/files/css/css_Fiag1Bs3luJL-hjsMyRn0RTqiQd8SYlaM2sIRysXfZI.css?delta=6&amp;language=en&amp;theme=uq_standard_theme&amp;include=eJxtjlEOgCAMQy-k8UhkgwVJBgiFD29vkA8T9avJa7cWJ5rEjQmy9GLQKDmqzrRdomxeM5MOwwmCTwYz_vDXQSPGD7ZZlQ4E1rvF5l4x6BAT0khb-dZwFXK29sg_P3OSXta55AKMOU6h" />
+</head>
+<body>
+${sectionHTML}
+</body>
+</html>`;
+  
+  document.getElementById('generatedSnippet').textContent = fullSnippet;
+  alert('Assessment section extracted successfully.');
+});
+
+// Copy generated snippet to clipboard
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const snippet = document.getElementById('generatedSnippet').textContent;
+  if (!snippet) {
+    alert('No snippet to copy. Please extract the snippet first.');
+    return;
+  }
+  navigator.clipboard.writeText(snippet)
+    .then(() => {
+      alert('HTML snippet copied to clipboard!');
+    })
+    .catch(err => {
+      alert('Error copying snippet: ' + err);
+    });
+});
+</script>
+</body>
+</html>
