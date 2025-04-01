@@ -24,7 +24,7 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       border-right: 1px solid #CDCDCD;
     }
-    @media (max-width: 1000px) {
+    @media (max-width: 1199px) {
   /* Ensure the generator panel takes full width */
   .generator-panel {
     width: 100%;
@@ -530,8 +530,8 @@
   
   blockItems.forEach(item => {
     item.addEventListener('click', function() {
-      // Only apply on screens less than 1000px wide.
-      if (window.innerWidth < 1000) {
+      // Only apply on screens less than 1199px wide.
+      if (window.innerWidth < 1199) {
         previewPanel.classList.add('visible');
       }
     });
@@ -539,7 +539,7 @@
   
   // When the mouse leaves the preview panel, hide it.
   previewPanel.addEventListener('mouseleave', function() {
-    if (window.innerWidth < 1000) {
+    if (window.innerWidth < 1199) {
       previewPanel.classList.remove('visible');
     }
   });
