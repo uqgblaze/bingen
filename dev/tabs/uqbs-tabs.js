@@ -1,6 +1,7 @@
-  const tabs = document.querySelectorAll('[role="tab"]');
-  const tabList = document.querySelector('[role="tablist"]');
-  const indicator = document.querySelector('.uqbs-tab-indicator');
+function initTabs(container = document) {
+  const tabs    = container.querySelectorAll('[role="tab"]');
+  const tabList = container.querySelector('[role="tablist"]');
+  const indicator = container.querySelector('.uqbs-tab-indicator');
 
   function adjustTabContainerHeight() {
     const container = document.querySelector('.uqbs-tab-container');
