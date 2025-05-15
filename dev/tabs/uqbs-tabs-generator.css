@@ -62,18 +62,21 @@ input[type="text"], input[type="number"], input[type="color"] {
     display: flex;
     border-bottom: 2px solid #ccc;
     margin-bottom: 1rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     }
     .editor-tab-button {
     padding: 0.5rem 1rem;
-    cursor: pointer;
-    background: #eee;
+    cursor: move;
+    background: #444;
     border: none;
     margin-right: 0.25rem;
     font-weight: bold;
     border-radius: 4px 4px 0 0;
     }
     .editor-tab-button.active {
-    background: #fff;
+    background: #51247A;
+    color: #FFF;
     border-bottom: 2px solid white;
     }
     .editor-tab-panel {
