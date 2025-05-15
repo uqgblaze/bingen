@@ -8,24 +8,49 @@ function setupTinyMCE(selector, initialContent, onChangeCallback) {
       'media', 'pagebreak', 'preview', 'quickbars', 'save', 'searchreplace', 'table',
       'visualblocks', 'wordcount'
     ],
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough backcolor forecolor | ' +
-             'codesample code importcss visualblocks save | link image media table mergetags | ' +
-             'addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | ' +
-             'checklist numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen | help',
+    // OLD toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough backcolor forecolor | ' +
+    //         'codesample code importcss visualblocks save | link image media table mergetags | ' +
+    //         'addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | ' +
+    //         'checklist numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen | help',
+    /*— 2) Classic menubar —*/
+    menubar: 'file edit view insert format tools table help',
+
+    /*— 3) Six ribbon-style toolbar rows —*/
+    toolbar1: [ //done
+      'undo redo',
+      'cut copy paste pastetext pasteword selectall',
+      'wordcount preview fullscreen help',
+      'save code'
+    ].join(' | '),
+
+    toolbar2: [ //done
+      'blocks fontfamily fontsize',
+      'bold italic underline strikethrough',
+      'subscript superscript removeformat',
+      'backcolor forecolor'
+    ].join(' | '),
+
+    toolbar3: [ //done
+      'link image media table pagebreak',
+      'bullist numlist checklist indent outdent blockquote',
+      'alignleft aligncenter alignright alignjustify lineheight',
+      'codesample charmap emoticons anchor'
+    ].join(' | '),
+    
+    /*- 4) Define fonts and formatting -*/
     content_css: [
-      'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Open+Sans&display=swap'
+      'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap'
     ],
+    font_family_formats: 'Atkinson Hyperlegible=Atkinson Hyperlegible, sans-serif; Arial=Arial, Helvetica, sans-serif; Merriweather=Merriweather, serif; Montserrat=Montserrat, sans-serif; Open Sans=Open Sans, sans-serif; Roboto=Roboto, sans-serif; Atkinson Hyperlegible=Atkinson Hyperlegible, sans-serif;',
     content_style: 'body { font-family: "Open Sans", sans-serif; font-size: 0.875rem; } p { margin: 0; }',
     block_formats: 'Title=h4;Heading=h5;Subheading=h6;Paragraph=p',
-    advlist_bullet_styles: 'default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman',
-    quickbars_selection_toolbar: 'bold italic | blocks | quicklink forecolor blockquote',
+
+    // - Custom in-text toolbars; Visual blocks - //
+    quickbars_selection_toolbar: 'bold italic | blocks | quicklink forecolor blockquote | alignleft aligncenter alignright alignjustify',
+    quickbars_insert_toolbar: 'quickimage quicktable media codesample',
     visualblocks_default_state: false,
-    tinycomments_mode: 'embedded',
-    tinycomments_author: 'Author name',
-    mergetags_list: [
-      { value: 'First.Name', title: 'First Name' },
-      { value: 'Email', title: 'Email' }
-    ],
+
+    // - Color Maping to UQ brand, and number of color columns -//
     color_map: [
       '#51247A', 'UQ Purple, #51247A',
       '#000000', 'UQ Black, #000000',
@@ -59,6 +84,25 @@ function setupTinyMCE(selector, initialContent, onChangeCallback) {
       '#F8F8F8', 'Blackboard Table Heading, #F8F8F8'
     ],
     color_cols: 6,
+
+    // Advanced features that are not currently enabled //
+    advlist_bullet_styles: 'default,lower-alpha,lower-greek,lower-roman,upper-alpha,upper-roman',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' }
+    ],
+
+    // Height minimums for the text editor; make it resizeable - be sure to add 'autoresize' as a plugin! //
+    height: 400,            // starting height
+    min_height: 300,        // never shrink below 200px
+    resize: true,           // allow manual resize (default unless autoresize is enabled)
+    // optional: control the auto-resize bounds
+    autoresize_min_height: 300,
+    autoresize_max_height: 800,
+
+    // Make it all work //
     setup: function(editor) {
       editor.on('init', function() {
         editor.setContent(initialContent);
