@@ -1,3 +1,4 @@
+// broken - don't use this file //
 function setupTinyMCE(selector, initialContent, onChangeCallback) {
   tinymce.init({
     selector: selector,
