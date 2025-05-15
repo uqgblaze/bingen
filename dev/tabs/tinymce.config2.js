@@ -1,5 +1,6 @@
-tinymce.init({
-    selector,
+function setupTinyMCE(selector, initialContent, onChangeCallback) {
+  tinymce.init({
+    selector: selector,
     /*— 1) Plugins —*/
     plugins: [
       'anchor', 'accordion', 'autolink', 'autoresize', 'charmap',
