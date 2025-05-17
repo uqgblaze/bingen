@@ -1,6 +1,7 @@
 
 function setupTinyMCE(selector, initialContent, onChangeCallback) {
   tinymce.init({
+    license_key: 'gpl',
     selector: selector,
     plugins: [
       'anchor', 'accordion', 'autolink', 'autoresize', 'charmap', 'code', 'codesample',
@@ -102,14 +103,47 @@ function setupTinyMCE(selector, initialContent, onChangeCallback) {
     autoresize_min_height: 300,
     autoresize_max_height: 800,
 
+    // Save functionality - enable download
+    save_enablewhendirty: false, // set to true (default) to disable button until only when modifications have been made
+    save_onsavecallback: function (editor){
+      const html = editor.getContent({ format: 'html'});
+      const blob = new Blob([html], {type: 'text/html'});
+      const url  = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href    = url;
+      a.download  = 'SavedContent.html';
+      document.body.appendChild(a);
+      a.click();
+
+      // Cleanup
+      URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      return false;
+    },
+    // Save functionality - intercept and prevent form submission event
+    
+
     // Make it all work //
     setup: function(editor) {
       editor.on('init', function() {
+        // 1) set the intial content
         editor.setContent(initialContent);
-      });
-      editor.on('change keyup', function() {
-        onChangeCallback(editor.getContent());
-      });
-    }
+
+        // 2) Save functionality prevent the parent form from submitting
+        const textarea = editor.getElement();
+        const form = textarea.closest('form');
+        if (form) {
+          form.addEventListener('submit', e => e.preventDefault());
+        }
+        });
+
+        // 3) fire your onChangeCallback on every change/keyup
+        editor.on('change keyup', function() {
+          onChangeCallback(editor.getContent());
+        });
+      }
   });
 }
+
