@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UQ Tab Generator</title>
+  <!-- Styles for live tabs -->
+  <link rel="stylesheet" href="https://uqgblaze.github.io/bingen/dev/tabs/uqbs-tabs.css" />
+  <link rel="stylesheet" media="all" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
+  <!-- Styles for generator UI -->
+  <!-- <link rel="stylesheet" href="https://uqgblaze.github.io/bingen/dev/tabs/uqbs-tabs-generator.css" /> -->
+  <!-- Sorting library for drag-and-drop -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <!-- TinyMCE editor -->
+  <script src="https://uqgblaze.github.io/bingen/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+  <!-- Shared TinyMCE configuration -->
+  <script src="tinymce.config.js"></script>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+  <style>
+    :root {
+      --window-height: 500px;
+      --window-width: 1200px;
+      --window-bgcolor: #fcfcfc;
+      --navbar-bgcolor: #ebebeb;
+    }
+    
+    .preview {
+      width: 95%;  
+      max-width: var(--window-width);
+      height: var(--window-height);
+      background-color: var(--window-bgcolor);
+      padding: 20px;
+      border: 1px solid #ccc;
+      overflow: auto;
+    }
+    .tab-label{
+       display: flex;
+       flex-direction: row;
+       width: 100%;
+       min-width: 600px;
+       padding: 1rem;
+       background-color: lightblue;
+
+    }
+    .tab-label-bar{
+        display: block;
+        padding: 1rem;
+        width: 100%;
+    }
+    .tab-label-bar label{
+        width: 20%;
+        margin: 0 8px;
+    }
+    .tab-label-bar input{
+        width: 60%;
+        margin: 0 8px;
+    }
+    .delete-button{
+        display: block;
+        background: #e72645; border: none;
+        color: white; padding: 0.25rem 0.5rem;
+        margin: 0 8px;
+        font-size: 0.875rem; border-radius: 4px;
+        cursor: pointer;
+        width: 20%;}
+    
+    /* --- From uqbs-tabs-generator.css --- */
+    
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f8f8;
+  padding: 2rem;
+}
+.generator-container {
+  max-width: 1200px;
+  margin: auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.section { margin-bottom: 2rem; }
+label {
+  font-weight: 600;
+  display: block;
+  margin-top: 1rem;
+}
+input[type="text"], input[type="number"], input[type="color"] {
+  width: 100%; padding: 0.1rem; font-size: 0.875rem;
+  border: 1px solid #ccc; border-radius: 4px;
+  height: 1rem;
+}
+/* .tab-list { list-style: none; padding: 0; }
+.tab-list li {
+  margin-bottom: 1rem; border: 1px solid #ccc;
+  padding: 1rem; border-radius: 6px;
+  position: relative; cursor: move; background: #fafafa;
+} */
+.preview {
+  border: 1px dashed #ccc; background-color: #fff;
+  min-height: 505px; border-radius: 6px;
+  padding: 0;
+  width: 100%; display: block;
+}
+/*.button {
+  margin-top: 1rem; padding: 0.5rem 1rem;
+  background-color: #51247A; color: #fff;
+  border: none; border-radius: 4px; cursor: pointer;
+} */
+
+.css-variable-group {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+/* ---- This CSS is for this generator page to style the generator tabs ---- */
+.editor-tab-buttons {
+    display: flex;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 1rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    }
+    .editor-tab-button {
+    padding: 0.5rem 1rem;
+    cursor: move;
+    background: var(--navbar-bgcolor);
+    border: none;
+    margin-right: 0.25rem;
+    font-weight: bold;
+    border-radius: 4px 4px 0 0;
+    }
+    .editor-tab-button.active {
+    background: #51247A;
+    color: #FFF;
+    border-bottom: 2px solid white;
+    }
+    .editor-tab-panel {
+    display: none;
+    }
+    .editor-tab-panel.active {
+    display: block;
+    }
+
+    /* --- New content --- */
+
+    :root {
+      --uqbs-gen-spacing: 1rem;
+    }
+
+    /* Toolbar container */
+    #uqbs-toolbar-container {
+      display: flex;
+      gap: var(--uqbs-gen-spacing);
+      align-items: center;
+      font-family: Arial, sans-serif;
+      padding-left: var(--uqbs-gen-spacing);
+      padding-right: var(--uqbs-gen-spacing);
+      background: #EEE;
+      border-radius: 8px;
+    }
+
+    /* Shared button styles */
+    .uqbs-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      gap: 1rem;
+    }
+    .uqbs-btn i {
+      margin-right: 0.5rem;
+    }
+
+    /* Add New Tab (25%) */
+    .uqbs-add-tab {
+      width: 20%;
+      background-color: #51247A;
+      color: #fff;
+      text-align: center;
+      font-size: 0.7rem;
+      height: 48px;
+    }
+    .uqbs-add-tab:hover{
+        background-color: #3c185e;
+    }
+
+    /* Label + input (50%) */
+    .uqbs-tab-label-wrapper {
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+    }
+    .uqbs-tab-label-wrapper label {
+      margin-bottom: 0;
+      font-weight: bold;
+      color: #333;
+      font-size: 0.875rem;
+    }
+    .uqbs-tab-label-wrapper input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #51247A;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    /* Settings (12.5%) */
+    .uqbs-settings-btn {
+      width: 15%;
+      background-color: #D7D1CC;
+      color: #51247A;
+      margin-left: 1.5rem;
+      text-align: center;
+      font-size: 0.7rem;
+      height: 48px;
+    }
+
+    /* Delete (12.5%) */
+    .uqbs-delete-btn {
+      width: 15%;
+      background-color: #e72645;
+      color: #fff;
+      padding-left: var(--uqbs-gen-spacing);
+      padding-right: var(--uqbs-gen-spacing);
+      text-align: center;
+      font-size: 0.7rem;
+      height: 48px;
+    }
+    .delete-button-confirm{
+      width: 120px;
+      background-color: #e72645;
+      color: #fff;
+      padding-left: var(--uqbs-gen-spacing);
+      padding-right: var(--uqbs-gen-spacing);
+      text-align: center;
+      font-size: 0.7rem;
+      height: 48px;
+    }
+
+    .vhmin400{
+      min-height: 400px;
+    }
+    menu button{
+      display: block;
+      height: 48px;
+      width: 120px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="generator-container">
+    <!-- Live Preview Panel -->
+    <div class="section">
+      <h3>Live Preview</h3>
+      <div class="preview" id="live-preview"></div>
+    </div>
+
+    <!-- Tab Setup Editor -->
+    <div class="section">
+      <h3>Tab Setup (Drag to Reorder)</h3>
+
+      <!-- NEW: Toolbar -->
+      <div id="uqbs-toolbar-container">
+        <!-- Add New Tab -->
+        <button class="uqbs-btn uqbs-add-tab" onclick="addTab(), scheduleSave();">
+          <i class="fas fa-plus"></i>
+          <span>Add New Tab</span>
+        </button>
+
+        <!-- Edit Label for Active Tab -->
+        <div class="uqbs-tab-label-wrapper">
+          <label for="active-tab-label">Tab Label</label>
+          <input
+            id="active-tab-label"
+            type="text"
+            placeholder="Tab Label"
+            oninput="tabData[activeTabIndex].label = this.value; renderTabs(); renderPreview(); scheduleSave();"
+          />
+        </div>
+
+        <!-- Settings -->
+        <button class="uqbs-btn uqbs-settings-btn" onclick="openStyleSettings()">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </button>
+
+        <!-- Delete Tab -->
+        <button class="uqbs-btn uqbs-delete-btn" onclick="deleteTab(activeTabIndex)">
+          <i class="fas fa-times"></i>
+          <span>Delete Tab</span>
+        </button>
+      </div>
+
+      <!-- These two containers are still used by your JS renderTabs() logic -->
+      <div class="uqbs-tab-container" style="margin-top: 1rem;">
+        <div class="editor-tab-buttons" id="editor-tab-buttons"></div>
+        <div class="editor-tab-panels" id="editor-tab-panels"></div>
+      </div>
+    </div>
+
+    <!-- Style Settings moved into a modal dialog -->
+    <dialog id="styleSettingsDialog">
+      <form method="dialog">
+        <h2>Style Settings</h2>
+        <div class="css-variable-group">
+          <div>
+            <label for="window-height">Window Height (px)</label>
+            <input id="window-height" type="number" value="500" onchange="updateCSSVars()" />
+          </div>
+          <div>
+            <label for="window-width">Window Width (px)</label>
+            <input id="window-width" type="number" value="1200" onchange="updateCSSVars()" />
+          </div>
+          <div>
+            <label for="bgcolor">Window BG Colour</label>
+            <input id="bgcolor" type="color" value="#fcfcfc" onchange="updateCSSVars()" />
+          </div>
+          <div>
+            <label for="navbarcolor">Navbar BG Colour</label>
+            <input id="navbarcolor" type="color" value="#ebebeb" onchange="updateCSSVars()" />
+          </div>
+        </div>
+        <menu class="uqbs-btn">
+          <button value="cancel">Close</button>
+          <button type="button" onclick="clearTabMemory()" class="delete-button-confirm">
+            <span class="uq-icon uq-icon--light uq-icon--standard--exclamation-triangle"></span>Clear Memory
+        </button>
+        </menu>
+      </form>
+    </dialog>
+
+    <!-- Export Button -->
+    <div class="section">
+      <button class="uq-button uq-button--large uq-button--expand" onclick="copyHTML()">
+        <span class="uq-icon uq-icon uq-icon--standard--common-file-double"></span>Copy HTML to Clipboard
+      </button>
+    </div>
+
+    <!-- Notes and alerts -->
+     <div class="section">
+        <div class="uq-alert uqbs-rounded-border--all uq-alert--warning" role="note" style="width: 80%; margin: 0 auto;">
+            <div class="uq-alert__message">
+            <span><b>KNOWN BUG: Save Button</b><p>There is a known bug with the "save" function in the TinyMCE text editor. If you <b>save</b> the document, then it will <b>delete</b> all other tabs.</p>
+                <p>In the meantime, if you are building content from scratch, I recommend that you <b>design each tab one-by-one</b>.</p><p>Then import the HTML using the <b>code</b> button to load it into the editor to copy/paste the HTML to your clipboard.</p></span>
+            
+            </div>	
+        </div>	
+     </div>
+
+  </div>
+
+  
+
+  <!-- Intercept the forms "submit" button to prevent page refresh -->
+  <script> 
+  
+  </script>
+  <!-- Helper to open the settings dialog -->
+  <script>
+    function openStyleSettings() {
+      const dlg = document.getElementById('styleSettingsDialog');
+      if (dlg.showModal) {
+        dlg.showModal();
+      } else {
+        alert('Your browser does not support HTML <dialog>.');
+      }
+    }
+  </script>
+
+  <!-- Delete Confirmation Dialog -->
+  <dialog id="delete-confirm">
+    <form method="dialog">
+      <p>Are you sure you want to delete this tab? This cannot be undone.</p>
+      <menu class="uqbs-btn">
+        <button value="cancel">Cancel</button>
+        <button value="confirm" class="delete-button-confirm">Delete</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- Enable Automatic saving after 5 seconds-->
+  <script>
+  // STORAGE + DEBOUNCE SETUP
+  const STORAGE_KEY = 'uqbsTabGeneratorState';
+  let saveTimer = null;
+  
+  function scheduleSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tabData));
+      console.log('Auto-saved tab state');
+    }, 5000);
+  }
+
+  function restoreState() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    try {
+      tabData = JSON.parse(saved);
+    } catch (e) {
+      console.warn('Couldn’t parse saved state:', e);
+    }
+  }
+
+  /**
+   * Completely clear saved tabs from localStorage,
+   * reset the working data, and redraw everything.
+   */
+  function clearTabMemory() {
+    // 1) Remove from storage
+    localStorage.removeItem(STORAGE_KEY);
+
+    // 2) Reset JS state
+    tabData = [];
+    currentEditorId = 1;
+    activeTabIndex = 0;
+
+    // 3) Re-render UI
+    renderTabs();
+    renderPreview();
+
+    // 4) Close the settings dialog (optional)
+    const dlg = document.getElementById('styleSettingsDialog');
+    if (dlg && dlg.close) dlg.close();
+
+    alert('Tab memory cleared! Refresh your page to apply changes.');
+  }
+</script>
+
+
+  <!-- Generator Logic -->
+  <script>
+    // State
+    let tabData = [];
+    let currentEditorId = 1;
+    let activeTabIndex = 0;
+
+    // CSS Variable Updates
+    function updateCSSVars() {
+      document.documentElement.style.setProperty('--window-height', document.getElementById('window-height').value + 'px');
+      document.documentElement.style.setProperty('--window-width', document.getElementById('window-width').value + 'px');
+      document.documentElement.style.setProperty('--window-bgcolor', document.getElementById('bgcolor').value);
+      document.documentElement.style.setProperty('--navbar-bgcolor', document.getElementById('navbarcolor').value);
+      renderPreview(); // Re-render preview when style changes
+    }
+
+    // Add a new tab to editor
+    function addTab() {
+      const id = `editor-${currentEditorId++}`;
+      const label = `Tab ${tabData.length + 1}`;
+      tabData.push({ id, label, content: '<p>Content for ' + label + '</p>' });
+      renderTabs();
+      renderPreview();
+      scheduleSave();
+      // Sync the toolbar label input
+      document.getElementById('active-tab-label').value = label;
+    }
+
+    // Delete a tab with confirmation
+    function deleteTab(index) {
+      const dialog = document.getElementById('delete-confirm');
+      dialog.showModal();
+      dialog.addEventListener('close', () => {
+        if (dialog.returnValue === 'confirm') {
+          tabData.splice(index, 1);
+          if (activeTabIndex >= tabData.length) activeTabIndex = tabData.length - 1;
+          renderTabs();
+          renderPreview();
+          scheduleSave();
+        }
+      }, { once: true });
+    }
+
+    // Render the editor's tab buttons and panels
+    function renderTabs() {
+      const btns = document.getElementById('editor-tab-buttons');
+      const panels = document.getElementById('editor-tab-panels');
+      btns.innerHTML = '';
+      panels.innerHTML = '';
+
+      // 1) Make sure TinyMCE is torn down and re-initialized 
+      tinymce.remove();
+
+      tabData.forEach((tab, i) => {
+        // Tab button
+        const b = document.createElement('button');
+        b.className = 'editor-tab-button' + (i === activeTabIndex ? ' active' : '');
+        b.textContent = tab.label;
+        b.onclick = () => { activeTabIndex = i; renderTabs(); };
+        btns.appendChild(b);
+
+        // Tab panel
+        const p = document.createElement('div');
+        p.className = 'editor-tab-panel' + (i === activeTabIndex ? ' active' : '');
+        p.innerHTML = `
+          <!-- <div class="tab-label-bar"><label class="tab-label">Tab Label: <input type="text" value="${tab.label}" \
+            oninput="tabData[${i}].label = this.value; renderTabs(); renderPreview();" />
+            <button class="delete-button" onclick="deleteTab(${i})">Delete</button></label>
+            </div>-->
+          <textarea id="${tab.id}" class="vhmin400"></textarea>
+          
+        `;
+        panels.appendChild(p);
+
+        // Initialize TinyMCE for this panel
+        setupTinyMCE('#' + tab.id, tab.content, (newContent) => {
+          tabData[i].content = newContent;
+          renderPreview();
+          scheduleSave();           // ← save 5s after last keystroke
+        });
+      });
+
+      const labelInput = document.getElementById('active-tab-label');
+        if (labelInput) {
+        labelInput.value = tabData[activeTabIndex]?.label || '';
+        }
+
+      // Make buttons draggable
+      Sortable.create(btns, {
+        animation: 150,
+        onEnd: evt => {
+          const [moved] = tabData.splice(evt.oldIndex, 1);
+          tabData.splice(evt.newIndex, 0, moved);
+          activeTabIndex = evt.newIndex;
+          renderTabs();
+          renderPreview();
+          scheduleSave();
+        }
+      });
+    }
+
+    // Initialize tab functionality in the preview
+    function initTabs(container) {
+      const tabs = container.querySelectorAll('.uqbs-tab');
+      const panels = container.querySelectorAll('.uqbs-tab-content');
+      
+      // First make all tabs and panels inactive
+      tabs.forEach(tab => {
+        tab.setAttribute('aria-selected', 'false');
+        tab.setAttribute('tabindex', '-1');
+      });
+      
+      panels.forEach(panel => {
+        panel.setAttribute('aria-hidden', 'true');
+      });
+      
+      // Set first tab as active by default
+      if (tabs.length > 0) {
+        tabs[0].setAttribute('aria-selected', 'true');
+        tabs[0].setAttribute('tabindex', '0');
+        const firstPanelId = tabs[0].getAttribute('aria-controls');
+        const firstPanel = container.querySelector(`#${firstPanelId}`);
+        if (firstPanel) {
+          firstPanel.setAttribute('aria-hidden', 'false');
+        }
+      }
+
+      // Add click event listeners
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const targetPanelId = tab.getAttribute('aria-controls');
+          const targetPanel = container.querySelector(`#${targetPanelId}`);
+          
+          // Reset all tabs and panels
+          tabs.forEach(t => {
+            t.setAttribute('aria-selected', 'false');
+            t.setAttribute('tabindex', '-1');
+          });
+          panels.forEach(p => p.setAttribute('aria-hidden', 'true'));
+
+          // Activate clicked tab and its panel
+          tab.setAttribute('aria-selected', 'true');
+          tab.setAttribute('tabindex', '0');
+          if (targetPanel) {
+            targetPanel.setAttribute('aria-hidden', 'false');
+          }
+        });
+      });
+    }
+
+    // Render the live preview
+    function renderPreview() {
+      const preview = document.getElementById('live-preview');
+      if (!tabData.length) {
+        preview.innerHTML = '<p>No tabs yet. Add one to get started.</p>';
+        return;
+      }
+      
+      let html = '<div class="uqbs-tab-body">'
+               + '<div class="uqbs-tab-container">'
+               + '<div class="uqbs-tabs" role="tablist" aria-label="Tab selection">';
+
+      // Generate tab buttons
+      tabData.forEach((tab, i) => {
+        html += `<button class="uqbs-tab" role="tab" aria-selected="${i===0 ? 'true' : 'false'}"` 
+             + ` aria-controls="panel-${i}" id="tab-${i}"` 
+             + ` tabindex="${i===0 ? 0 : -1}">${tab.label}</button>`;
+      });
+      
+      html += '</div>'; // Close tabs container
+      
+      // Generate tab content panels
+      tabData.forEach((tab, i) => {
+        html += `<div class="uqbs-tab-content" role="tabpanel" id="panel-${i}"` 
+             + ` aria-labelledby="tab-${i}" aria-hidden="${i!==0 ? 'true' : 'false'}">`
+             + tab.content
+             + '</div>';
+      });
+
+      html += '</div></div>'; // Close tab container and body
+      preview.innerHTML = html;
+
+      // Initialize tab functionality in the preview
+      setTimeout(() => {
+        initTabs(preview);
+      }, 100);
+    }
+
+    // Copy HTML to clipboard with necessary CSS/JS references
+    function copyHTML() {
+      // Get the inner HTML of the preview
+      const tabContent = document.getElementById('live-preview').innerHTML;
+      
+      // Create the complete HTML with required CSS and JS sources
+      // Now we include the tab initialization script directly in the output
+      const completeHTML = `
+<!-- UQ Tabs Component -->
+<!-- Required CSS -->
+<link rel='stylesheet' href='https://uqgblaze.github.io/bingen/dev/tabs/uqbs-tabs.css' \/>
+<link rel='stylesheet' media='all' href='https://uq-business-school.github.io/styleguide/css/superstyle.css' \/>
+
+${tabContent}
+
+<!-- Inline Tab Functionality -->
+<script>
+(function() {
+  \/\/ Function to initialize tab functionality
+  function initUQTabs() {
+    // Find all tab containers
+    const tabContainers = document.querySelectorAll('.uqbs-tab-container');
+    
+    tabContainers.forEach(container => {
+      const tabs = container.querySelectorAll('.uqbs-tab');
+      const panels = container.querySelectorAll('.uqbs-tab-content');
+      
+      \/\/ First make sure at least one tab is active
+      let hasActiveTab = false;
+      tabs.forEach(tab => {
+        if (tab.getAttribute('aria-selected') === 'true') {
+          hasActiveTab = true;
+        }
+      });
+      
+      \/\/ If no active tab, set first one as active
+      if (!hasActiveTab && tabs.length > 0) {
+        tabs[0].setAttribute('aria-selected', 'true');
+        tabs[0].setAttribute('tabindex', '0');
+        const firstPanelId = tabs[0].getAttribute('aria-controls');
+        const firstPanel = container.querySelector('#' + firstPanelId);
+        if (firstPanel) {
+          firstPanel.setAttribute('aria-hidden', 'false');
+        }
+      }
+
+      \/\/ Add click event listeners to all tabs
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          const targetPanelId = this.getAttribute('aria-controls');
+          const targetPanel = document.getElementById(targetPanelId);
+          
+          \/\/ Reset all tabs and panels
+          tabs.forEach(t => {
+            t.setAttribute('aria-selected', 'false');
+            t.setAttribute('tabindex', '-1');
+          });
+          
+          panels.forEach(p => {
+            p.setAttribute('aria-hidden', 'true');
+          });
+
+          \/\/ Activate clicked tab and its panel
+          this.setAttribute('aria-selected', 'true');
+          this.setAttribute('tabindex', '0');
+          
+          if (targetPanel) {
+            targetPanel.setAttribute('aria-hidden', 'false');
+          }
+        });
+      });
+    });
+  }
+
+  \/\/ Run initialization when DOM is fully loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initUQTabs);
+  } else {
+    \/\/ If DOM is already loaded, run immediately
+    initUQTabs();
+  }
+  
+  \/\/ Also try to initialize after a small delay to handle LMS environments
+  setTimeout(initUQTabs, 500);
+})();
+<\/script>
+`;
+      
+      navigator.clipboard.writeText(completeHTML).then(() => {
+        alert('Complete HTML copied to clipboard with required CSS and inline JS!');
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+        alert('Failed to copy HTML: ' + err.message);
+      });
+    }
+
+    // Initialize with first tab
+    window.onload = () => {
+        updateCSSVars();
+        restoreState();                  // ← bring back your draft, if any
+
+        if (tabData.length === 0) {
+            addTab();                     // ← first-time run: create Tab1
+        } else {
+            renderTabs();
+            renderPreview();              // ← if you had tabs, re-draw them
+        }
+    };
+  </script>
+</body>
+</html>
