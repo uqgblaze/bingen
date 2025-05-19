@@ -24,7 +24,10 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   transition: min-height 0.3s ease;
 }
-
+.uqbs-tab:focus-visible {
+  outline: 3px solid #51247A; /* UQ purple */
+  outline-offset: 2px;
+}
 .uqbs-tabs {
   position: relative;
   display: flex;
