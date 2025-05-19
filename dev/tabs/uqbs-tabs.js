@@ -86,18 +86,21 @@
       });
 
       // Initial indicator setup
-      const activeTab = container.querySelector('.uqbs-tab[aria-selected="true"]');
-      if (activeTab) {
-        animateIndicator(activeTab);
-      }
-    });
+        let hasInitialised = false;
+
+  function safeInit() {
+    if (!hasInitialised) {
+      initUQTabs();
+      hasInitialised = true;
+    }
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initUQTabs);
+    document.addEventListener('DOMContentLoaded', safeInit);
   } else {
-    initUQTabs();
+    safeInit();
   }
 
-  setTimeout(initUQTabs, 500);
+  // For LMS compatibility (e.g. Blackboard Ultra), fallback delayed attempt
+  setTimeout(safeInit, 500);
 })();
