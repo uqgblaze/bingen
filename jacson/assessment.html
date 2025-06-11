@@ -67,7 +67,7 @@
       const fullPath = jsonPath ? `${jsonPath}.json` : null;
 
       if (!fullPath) {
-        document.getElementById('content').innerHTML = '<p class="error">Error: No JSON path specified.</p>';
+        document.getElementById('content').innerHTML = '<p class="error">Error: Course profile not yet published, or broken link to course profile.</p>';
         return;
       }
 
@@ -85,7 +85,7 @@
 
         let tableHtml = `
           <table>
-            <caption>Assessment Details</caption>
+            <caption>${a.semester_details}</caption>
             <thead>
               <tr>
                 <th>Title</th>
