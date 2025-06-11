@@ -57,7 +57,8 @@
       const fullPath = jsonPath ? `${jsonPath}.json` : null;
 
       if (!fullPath) {
-        document.getElementById('content').innerHTML = '<p class="error">Error: Course profile not yet published, or broken link to course profile.</p>';
+        document.getElementById('content').innerHTML =
+          '<p class="error">Error: Course profile not yet published, or broken link to course profile.</p>';
         return;
       }
 
@@ -70,7 +71,8 @@
         const assessments = data.assessment_details || data.assessments;
 
         if (!assessments || assessments.length === 0) {
-          document.getElementById('content').innerHTML = '<p class="error">No assessments found in the JSON file.</p>';
+          document.getElementById('content').innerHTML =
+            '<p class="error">No assessments found in the JSON file.</p>';
           return;
         }
 
@@ -106,7 +108,8 @@
         tableHtml += '</tbody></table>';
         document.getElementById('content').innerHTML = tableHtml;
       } catch (error) {
-        document.getElementById('content').innerHTML = `<p class="error">Failed to load JSON: ${error.message}</p>`;
+        document.getElementById('content').innerHTML =
+          `<p class="error">Failed to load JSON: ${error.message}</p>`;
       }
     }
 
