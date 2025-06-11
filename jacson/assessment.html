@@ -68,7 +68,7 @@
 
         const data = await response.json();
         const semester = data.semester_details || 'Assessment Details';
-        const assessments = data.assessment_details || data.assessments;
+        const assessments = data.assessments;
 
         if (!assessments || assessments.length === 0) {
           document.getElementById('content').innerHTML =
@@ -92,15 +92,16 @@
 
         assessments.forEach(a => {
           const title = a.assessment_title || '—';
-          const weight = a.weight || '—';
-          const due = a.due_date?.date_and_time?.replace(/\s*pm|\s*am/i, '').replace(/\./g, ':').trim() || '—';
-          const lo = a.learning_outcomes || '—';
+          const weighting = a.weighting || '—';
+          const dueDate = a.due_date || '—';
+          const learningObjectives = a.learning_objectives || '—';
+
           tableHtml += `
             <tr id="${a.assessment_detail_section_id || ''}">
               <td>${title}</td>
-              <td>${weight}</td>
-              <td>${due}</td>
-              <td>${lo}</td>
+              <td>${weighting}</td>
+              <td>${dueDate}</td>
+              <td>${learningObjectives}</td>
             </tr>
           `;
         });
