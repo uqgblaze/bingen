@@ -52,16 +52,6 @@
       return urlParams.get(param);
     }
 
-    function formatDate(rawDate) {
-      if (!rawDate) return '';
-      const date = new Date(rawDate);
-      const options = {
-        day: '2-digit', month: '2-digit', year: 'numeric',
-        hour: '2-digit', minute: '2-digit', hour12: false
-      };
-      return date.toLocaleString('en-AU', options).replace(',', '');
-    }
-
     async function loadAssessments() {
       const jsonPath = getQueryParam('json');
       const fullPath = jsonPath ? `${jsonPath}.json` : null;
@@ -76,7 +66,8 @@
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
         const data = await response.json();
-        const assessments = data.assessment_details;
+        const semester = data.semester_details || 'Assessment Details';
+        const assessments = data.assessment_details || data.assessments;
 
         if (!assessments || assessments.length === 0) {
           document.getElementById('content').innerHTML = '<p class="error">No assessments found in the JSON file.</p>';
@@ -85,7 +76,7 @@
 
         let tableHtml = `
           <table>
-            <caption>${a.semester_details}</caption>
+            <caption>${semester}</caption>
             <thead>
               <tr>
                 <th>Title</th>
@@ -98,14 +89,16 @@
         `;
 
         assessments.forEach(a => {
-          const date = a.due_date?.date_and_time || '';
-          const formattedDate = date.replace(/\s*pm|\s*am/i, '').replace(/\./g, ':').trim(); // clean time formatting
+          const title = a.assessment_title || '—';
+          const weight = a.weight || '—';
+          const due = a.due_date?.date_and_time?.replace(/\s*pm|\s*am/i, '').replace(/\./g, ':').trim() || '—';
+          const lo = a.learning_outcomes || '—';
           tableHtml += `
-            <tr id="${a.assessment_detail_section_id}">
-              <td>${a.assessment_title}</td>
-              <td>${a.weight}</td>
-              <td>${formattedDate}</td>
-              <td>${a.learning_outcomes}</td>
+            <tr id="${a.assessment_detail_section_id || ''}">
+              <td>${title}</td>
+              <td>${weight}</td>
+              <td>${due}</td>
+              <td>${lo}</td>
             </tr>
           `;
         });
