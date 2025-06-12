@@ -1,4 +1,5 @@
 {
+    "url": "https://course-profiles.uq.edu.au/course-profiles/TIMS7811-22499-7520",
     "full_course_code": "TIMS7811-22499-7520",
     "course_code": "TIMS7811",
     "class_code": "22499",
@@ -92,72 +93,156 @@
         {
             "learning_period": "Week 1",
             "activity_type": "Seminar",
-            "topic": "What is innovation and why is it important?Learning outcomes:L02, L03, L04"
+            "topic": "What is innovation and why is it important?Learning outcomes:L02, L03, L04",
+            "topic_title": "What is innovation and why is it important?",
+            "topic_description": "",
+            "learning_outcomes": [
+                "L02",
+                "L03",
+                "L04"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 2",
             "activity_type": "Seminar",
-            "topic": "Creativity, Ideation and the Innovation ProcessLearning outcomes:L01, L02"
+            "topic": "Creativity, Ideation and the Innovation ProcessLearning outcomes:L01, L02",
+            "topic_title": "Creativity, Ideation and the Innovation Process",
+            "topic_description": "",
+            "learning_outcomes": [
+                "L01",
+                "L02"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 3",
             "activity_type": "Seminar",
-            "topic": "Strategy under uncertaintyIndustry Partner Presentation TBCBack Bay Battery - First introductory scenario with 20 simulation runsLearning outcomes:L01, L02, L03"
+            "topic": "Strategy under uncertaintyIndustry Partner Presentation TBCBack Bay Battery - First introductory scenario with 20 simulation runsLearning outcomes:L01, L02, L03",
+            "topic_title": "Strategy under uncertainty",
+            "topic_description": "Industry Partner Presentation TBC\nBack Bay Battery - First introductory scenario with 20 simulation runs",
+            "learning_outcomes": [
+                "L01",
+                "L02",
+                "L03"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 4",
             "activity_type": "Seminar",
-            "topic": "EffectuationAlso submit your Major Assessment Option Selection via Blackboard: OPTION 1: Target organisation selection and innovation strategy report objectives. OPTION 2: Innovation commercialisation or startup – innovative business model. OPTION 3: Industry Partner Project Participation Motivation.Learning outcomes:L02, L03"
+            "topic": "EffectuationAlso submit your Major Assessment Option Selection via Blackboard: OPTION 1: Target organisation selection and innovation strategy report objectives. OPTION 2: Innovation commercialisation or startup – innovative business model. OPTION 3: Industry Partner Project Participation Motivation.Learning outcomes:L02, L03",
+            "topic_title": "Effectuation",
+            "topic_description": "Also submit your Major Assessment Option Selection via Blackboard: OPTION 1: Target organisation selection and innovation strategy report objectives. OPTION 2: Innovation commercialisation or startup – innovative business model. OPTION 3: Industry Partner Project Participation Motivation.",
+            "learning_outcomes": [
+                "L02",
+                "L03"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 5",
             "activity_type": "Seminar",
-            "topic": "Business models and Lean StartupLearning outcomes:L02, L03"
+            "topic": "Business models and Lean StartupLearning outcomes:L02, L03",
+            "topic_title": "Business models and Lean Startup",
+            "topic_description": "",
+            "learning_outcomes": [
+                "L02",
+                "L03"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 6",
             "activity_type": "Seminar",
-            "topic": "Design ThinkingBack Bay Battery - Intermediate scenario with 20 simulation runsOPTION 3 - project scoping agreements due - email lecturerLearning outcomes:L02, L03"
+            "topic": "Design ThinkingBack Bay Battery - Intermediate scenario with 20 simulation runsOPTION 3 - project scoping agreements due - email lecturerLearning outcomes:L02, L03",
+            "topic_title": "Design Thinking",
+            "topic_description": "Back Bay Battery - Intermediate scenario with 20 simulation runs\nOPTION 3 - project scoping agreements due - email lecturer",
+            "learning_outcomes": [
+                "L02",
+                "L03"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 7",
             "activity_type": "Seminar",
-            "topic": "Disruptive Innovation and Business Model InnLearning outcomes:L01, L02, L03"
+            "topic": "Disruptive Innovation and Business Model InnLearning outcomes:L01, L02, L03",
+            "topic_title": "Disruptive Innovation and Business Model Inn",
+            "topic_description": "",
+            "learning_outcomes": [
+                "L01",
+                "L02",
+                "L03"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 8",
             "activity_type": "Seminar",
-            "topic": "Business Model Innovation in PracticeBack Bay Battery - Advanced scenario with 20 simulation runsLearning outcomes:L03, L04"
+            "topic": "Business Model Innovation in PracticeBack Bay Battery - Advanced scenario with 20 simulation runsLearning outcomes:L03, L04",
+            "topic_title": "Business Model Innovation in Practice",
+            "topic_description": "Back Bay Battery - Advanced scenario with 20 simulation runs",
+            "learning_outcomes": [
+                "L03",
+                "L04"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Mid-sem break",
             "activity_type": "No student involvement (Breaks, information)",
-            "topic": "In-Semester Break"
+            "topic": "In-Semester Break",
+            "topic_title": "In-Semester Break",
+            "topic_description": "",
+            "learning_outcomes": []
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 9",
             "activity_type": "Workshop",
-            "topic": "Photo essay presentationsSubmit peer reviews within two days of presentationsLearning outcomes:L03"
+            "topic": "Photo essay presentationsSubmit peer reviews within two days of presentationsLearning outcomes:L03",
+            "topic_title": "Photo essay presentations",
+            "topic_description": "Submit peer reviews within two days of presentations",
+            "learning_outcomes": [
+                "L03"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 10",
             "activity_type": "Seminar",
-            "topic": "Innovation Strategy ImplementationLearning outcomes:L03, L04"
+            "topic": "Innovation Strategy ImplementationLearning outcomes:L03, L04",
+            "topic_title": "Innovation Strategy Implementation",
+            "topic_description": "",
+            "learning_outcomes": [
+                "L03",
+                "L04"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 11",
             "activity_type": "Seminar",
-            "topic": "10.\tNetworking, Open Innovation and CollaborationLearning outcomes:L02, L03"
+            "topic": "10.\tNetworking, Open Innovation and CollaborationLearning outcomes:L02, L03",
+            "topic_title": "10.\tNetworking, Open Innovation and Collaboration",
+            "topic_description": "",
+            "learning_outcomes": [
+                "L02",
+                "L03"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 12",
             "activity_type": "Seminar",
-            "topic": "Profiting from Innovation (IPR), Financing and Measuring InnovationReflective essay on simulation exercise submitted via BlackboardLearning outcomes:L02"
+            "topic": "Profiting from Innovation (IPR), Financing and Measuring InnovationReflective essay on simulation exercise submitted via BlackboardLearning outcomes:L02",
+            "topic_title": "Profiting from Innovation (IPR), Financing and Measuring Innovation",
+            "topic_description": "Reflective essay on simulation exercise submitted via Blackboard",
+            "learning_outcomes": [
+                "L02"
+            ]
         },
         {
-            "learning_period": "Week 1",
+            "learning_period": "Week 13",
             "activity_type": "Seminar",
-            "topic": "13.\tRevision and BBB Simulation FeedbackOPTION 3 - Industry Partner Project PresentationLearning outcomes:L01, L02, L03, L04"
+            "topic": "13.\tRevision and BBB Simulation FeedbackOPTION 3 - Industry Partner Project PresentationLearning outcomes:L01, L02, L03, L04",
+            "topic_title": "13.\tRevision and BBB Simulation Feedback",
+            "topic_description": "OPTION 3 - Industry Partner Project Presentation",
+            "learning_outcomes": [
+                "L01",
+                "L02",
+                "L03",
+                "L04"
+            ]
         }
     ]
 }
