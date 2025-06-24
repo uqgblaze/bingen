@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    window.onload = function () {
+      const referrer = document.referrer;
+      const urlParams = new URLSearchParams(window.location.search);
+      const destination = urlParams.get('to');
+
+      if (!referrer || !destination) {
+        document.body.innerText = "Error: Missing referrer or destination.";
+        return;
+      }
+
+      const match = referrer.match(/ultra\/(courses|organizations)\/(_\d+_1)/);
+      if (!match) {
+        document.body.innerText = "Error: Could not extract course or org ID from referrer.";
+        return;
+      }
+
+      const type = match[1]; // "courses" or "organizations"
+      const id = match[2];   // e.g. "_187964_1"
+
+      const newUrl = `https://learn.uq.edu.au/ultra/${type}/${id}/${destination}`;
+      window.location.href = newUrl;
+    };
+  </script>
+</head>
+<body>
+  Redirecting you to your course...
+</body>
+</html>
