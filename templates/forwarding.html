@@ -1,34 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Redirecting...</title>
+  <title>Forwarding...</title>
   <script>
     window.onload = function () {
       const referrer = document.referrer;
       const urlParams = new URLSearchParams(window.location.search);
       const destination = urlParams.get('to');
 
-      if (!referrer || !destination) {
-        document.body.innerText = "Error: Missing referrer or destination.";
-        return;
-      }
+      // Debug output
+      document.body.innerHTML = `<pre>Referrer: ${referrer}
+Destination: ${destination}</pre>`;
 
-      const match = referrer.match(/ultra\/(courses|organizations)\/(_\d+_1)/);
+      if (!referrer || !destination) return;
+
+      // Try to match courses or organizations
+      const match = referrer.match(/ultra\/(courses|organizations)\/(_\d+_1)/i);
       if (!match) {
-        document.body.innerText = "Error: Could not extract course or org ID from referrer.";
+        document.body.innerHTML += `<p style="color:red;">❌ Could not extract course/org ID from referrer</p>`;
         return;
       }
 
       const type = match[1]; // "courses" or "organizations"
-      const id = match[2];   // e.g. "_187964_1"
-
+      const id = match[2];   // "_123456_1"
       const newUrl = `https://learn.uq.edu.au/ultra/${type}/${id}/${destination}`;
+
+      document.body.innerHTML += `<p>✅ Forwarding to:<br><a href="${newUrl}">${newUrl}</a></p>`;
       window.location.href = newUrl;
     };
   </script>
 </head>
 <body>
-  Redirecting you to your course...
+  <p>Attempting redirect...</p>
 </body>
 </html>
