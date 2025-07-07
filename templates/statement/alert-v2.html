@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Alerts</title>
+  <title>Alerts, V8</title>
   <!-- Existing stylesheet -->
   <link rel="stylesheet" href="https://uq-business-school.github.io/styleguide/css/superstyle.css" />
   <!-- Generator UI styles -->
@@ -377,33 +377,43 @@ AOS.init({
       // Load saved content first
       loadSavedContent();
       
-      // Initialize TinyMCE with the shared configuration
-      tinyMCEEditor = initTinyMCE('statementText', {
-        setup: function(editor) {
-          editor.on('input change', function() {
-            updatePreview();
-            triggerAutoSave();
-          });
-        },
-        init_instance_callback: function(editor) {
-          tinyMCEEditor = editor;
-          updatePreview();
-          
-          // Set saved content if available
-          try {
-            const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-            if (saved) {
-              const data = JSON.parse(saved);
-              if (data.content) {
-                editor.setContent(data.content);
+      // Wait for the shared config to be available
+      function waitForSharedConfig() {
+        if (typeof initTinyMCE === 'function') {
+          // Initialize TinyMCE with the shared configuration
+          tinyMCEEditor = initTinyMCE('statementText', {
+            setup: function(editor) {
+              editor.on('input change', function() {
                 updatePreview();
+                triggerAutoSave();
+              });
+            },
+            init_instance_callback: function(editor) {
+              tinyMCEEditor = editor;
+              updatePreview();
+              
+              // Set saved content if available
+              try {
+                const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (saved) {
+                  const data = JSON.parse(saved);
+                  if (data.content) {
+                    editor.setContent(data.content);
+                    updatePreview();
+                  }
+                }
+              } catch (e) {
+                console.error('Error setting saved content:', e);
               }
             }
-          } catch (e) {
-            console.error('Error setting saved content:', e);
-          }
+          });
+        } else {
+          // Wait and try again
+          setTimeout(waitForSharedConfig, 100);
         }
-      });
+      }
+      
+      waitForSharedConfig();
     }
 
     // Attach event listeners to color buttons
@@ -429,9 +439,6 @@ AOS.init({
       }
     });
   </script>
-<script src="https://uq-business-school.github.io/ibis/tinymce/tinymce.min.js"></script>
-<!-- TinyMCE config -->
-<script src="https://uq-business-school.github.io/ibis/templates/interactive/tabs/tinymce.config.js"></script>
 
 </body>
 </html>
