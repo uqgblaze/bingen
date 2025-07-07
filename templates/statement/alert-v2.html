@@ -377,68 +377,81 @@ AOS.init({
       // Load saved content first
       loadSavedContent();
       
-      // Initialize TinyMCE with the shared configuration
-      if (typeof initTinyMCE === 'function') {
-        tinyMCEEditor = initTinyMCE('statementText', {
-          setup: function(editor) {
-            editor.on('input change', function() {
+      // Wait for shared config to load, then initialize
+      function tryInitialize() {
+        if (typeof initTinyMCE === 'function') {
+          // Use the shared configuration
+          tinyMCEEditor = initTinyMCE('statementText', {
+            setup: function(editor) {
+              editor.on('input change', function() {
+                updatePreview();
+                triggerAutoSave();
+              });
+            },
+            init_instance_callback: function(editor) {
+              tinyMCEEditor = editor;
               updatePreview();
-              triggerAutoSave();
-            });
-          },
-          init_instance_callback: function(editor) {
-            tinyMCEEditor = editor;
-            updatePreview();
-            
-            // Set saved content if available
-            try {
-              const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-              if (saved) {
-                const data = JSON.parse(saved);
-                if (data.content) {
-                  editor.setContent(data.content);
+              
+              // Set saved content if available
+              try {
+                const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (saved) {
+                  const data = JSON.parse(saved);
+                  if (data.content) {
+                    editor.setContent(data.content);
+                    updatePreview();
+                  }
+                }
+              } catch (e) {
+                console.error('Error setting saved content:', e);
+              }
+            }
+          });
+        } else {
+          // Check if tinymce is available for fallback
+          if (typeof tinymce !== 'undefined') {
+            console.warn('Shared TinyMCE config not found, using fallback configuration');
+            // Fallback: Initialize TinyMCE manually if shared config is not available
+            tinymce.init({
+              selector: '#statementText',
+              height: 300,
+              menubar: false,
+              plugins: 'lists link code',
+              toolbar: 'undo redo | bold italic | bullist numlist | link | code',
+              setup: function(editor) {
+                editor.on('input change', function() {
                   updatePreview();
+                  triggerAutoSave();
+                });
+              },
+              init_instance_callback: function(editor) {
+                tinyMCEEditor = editor;
+                updatePreview();
+                
+                // Set saved content if available
+                try {
+                  const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+                  if (saved) {
+                    const data = JSON.parse(saved);
+                    if (data.content) {
+                      editor.setContent(data.content);
+                      updatePreview();
+                    }
+                  }
+                } catch (e) {
+                  console.error('Error setting saved content:', e);
                 }
               }
-            } catch (e) {
-              console.error('Error setting saved content:', e);
-            }
-          }
-        });
-      } else {
-        // Fallback: Initialize TinyMCE manually if shared config is not available
-        tinymce.init({
-          selector: '#statementText',
-          height: 300,
-          menubar: false,
-          plugins: 'lists link code',
-          toolbar: 'undo redo | bold italic | bullist numlist | link | code',
-          setup: function(editor) {
-            editor.on('input change', function() {
-              updatePreview();
-              triggerAutoSave();
             });
-          },
-          init_instance_callback: function(editor) {
-            tinyMCEEditor = editor;
-            updatePreview();
-            
-            // Set saved content if available
-            try {
-              const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-              if (saved) {
-                const data = JSON.parse(saved);
-                if (data.content) {
-                  editor.setContent(data.content);
-                  updatePreview();
-                }
-              }
-            } catch (e) {
-              console.error('Error setting saved content:', e);
-            }
+          } else {
+            // Retry in case scripts are still loading
+            setTimeout(tryInitialize, 100);
           }
-        });
+        }
       }
+      
+      // Try to initialize, with a small delay to ensure scripts are loaded
+      setTimeout(tryInitialize, 100);
     }
 
     // Attach event listeners to color buttons
